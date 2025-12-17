@@ -4,7 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>User Login</title>
-  <link rel="stylesheet" href="common.css" />
+
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;color:#111}
+    .nav{background:#0f172a;padding:14px 0;color:#fff}
+    .container{width:1050px;max-width:1050px;margin:0 auto;padding:0 16px}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:700;letter-spacing:.3px}
+    .nav-links a{color:#fff;text-decoration:none;display:inline-block;margin-left:10px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.10)}
+    .nav-links a:hover{background:rgba(255,255,255,.16)}
+
+    .grid{display:flex;gap:14px;margin-top:16px}
+    .card{flex:1;background:#fff;border:1px solid #e6e8f0;border-radius:14px;padding:14px;box-shadow:0 10px 25px rgba(2,6,23,.06)}
+    .form-title{margin:0 0 10px}
+    label{display:block;font-size:13px;color:#333;margin:10px 0 6px}
+    input{width:100%;padding:11px 12px;border:1px solid #d6d9e6;border-radius:10px;font-size:14px;outline:none}
+    input:focus{border-color:#0ea5e9}
+    .err{color:#b91c1c;margin:8px 0 0;min-height:16px}
+    .ok{color:#15803d;margin:8px 0 0;min-height:16px}
+    .btn{border:0;padding:11px 12px;border-radius:10px;background:#0ea5e9;color:#fff;cursor:pointer;font-weight:600}
+    .btn:hover{opacity:.95}
+    .btn.ghost{background:#fff;color:#0f172a;border:1px solid #d6d9e6}
+    .sep{height:1px;background:#eef0f6;margin:12px 0}
+    .muted{color:#555;margin:0;line-height:1.45}
+  </style>
 </head>
 <body>
   <div class="nav">
@@ -19,7 +43,7 @@
 
   <div class="container">
     <div class="grid">
-      <div class="card col-6 shadow">
+      <div class="card">
         <h2 class="form-title">User Login</h2>
 
         <form id="loginForm" onsubmit="return false;">
@@ -39,7 +63,7 @@
         </form>
       </div>
 
-      <div class="card col-6 shadow">
+      <div class="card">
         <h2 class="form-title">Demo Info</h2>
         <p class="muted">Register a user first, then login with the same email + password.</p>
         <div class="sep"></div>

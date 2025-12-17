@@ -4,7 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="common.css" />
+
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;color:#111}
+    a{text-decoration:none;color:#fff}
+    .nav{background:#0f172a;padding:14px 0}
+    .container{width:1050px;max-width:1050px;margin:0 auto;padding:0 16px}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:700;letter-spacing:.3px}
+    .nav-links a{display:inline-block;margin-left:10px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.10)}
+    .nav-links a:hover{background:rgba(255,255,255,.16)}
+
+    .hero{margin-top:16px;background:#fff;border:1px solid #e6e8f0;border-radius:14px;padding:16px;box-shadow:0 10px 25px rgba(2,6,23,.06)}
+    .muted{color:#555;margin:0}
+    .err{color:#b91c1c;margin:10px 0 0;min-height:16px}
+    .kpi{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .pill{background:#fff;border:1px solid #e6e8f0;padding:8px 10px;border-radius:999px;font-size:13px}
+
+    .grid{margin-top:14px}
+    .card{background:#fff;border:1px solid #e6e8f0;border-radius:14px;padding:14px;box-shadow:0 10px 25px rgba(2,6,23,.06)}
+    .form-title{margin:0 0 10px}
+
+    .post{display:flex;gap:12px}
+    .thumb{width:78px;height:78px;border-radius:12px;background:#eef2f7;border:1px dashed #cbd5e1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#334155}
+    .badge{display:inline-block;font-size:12px;padding:4px 8px;border-radius:999px;background:#eef2ff;border:1px solid #e0e7ff;color:#1e3a8a;margin-left:6px}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;color:#555;font-size:13px;margin:6px 0 10px}
+    .btn{border:0;padding:9px 10px;border-radius:10px;background:#0ea5e9;color:#fff;cursor:pointer;font-weight:600;font-size:13px}
+    .btn:hover{opacity:.95}
+    .btn.danger{background:#ef4444}
+    .btn.ghost{background:#fff;color:#0f172a;border:1px solid #d6d9e6}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .post-card{margin-bottom:10px}
+  </style>
 </head>
 <body>
   <div class="nav">
@@ -18,7 +50,7 @@
   </div>
 
   <div class="container">
-    <div class="hero shadow">
+    <div class="hero">
       <h1 style="margin:0 0 6px">Manage Posts</h1>
       <p class="muted">Approve, reject, or review user submitted lost & found posts (prototype only).</p>
       <p id="guard" class="err"></p>
@@ -26,7 +58,7 @@
     </div>
 
     <div class="grid">
-      <div class="card col-12 shadow">
+      <div class="card">
         <h2 class="form-title">Pending / Review Queue</h2>
         <div id="postList"></div>
       </div>
