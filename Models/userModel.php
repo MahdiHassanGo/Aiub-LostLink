@@ -1,45 +1,38 @@
 <?php
-require_once('db.php');
+require_once(__DIR__ . '/db.php');
 
+function addUser($user) {
+  $con = getConnection();
 
-function login($user){
-    $con = getConnection();
-    $sql = "select * from users where username='{$user['username']}' and password='{$user['password']}'";
-    $result = mysqli_query($con, $sql);
-    if(mysqli_num_rows($result) == 1){
-        return true;
-    }else{
-        return false;
-    }
+  $username = trim($user['username']);
+  $email    = trim($user['email']);
+  $pass     = $user['password'];
+
+  $hash = password_hash($pass, PASSWORD_DEFAULT);
+
+  $sql = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, 'User')";
+  $stmt = mysqli_prepare($con, $sql);
+  if (!$stmt) return false;
+
+  mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hash);
+  return mysqli_stmt_execute($stmt);
 }
 
+function login($email, $password) {
+  $con = getConnection();
 
-function getUserById($id){
+  $sql = "SELECT * FROM users WHERE email=? LIMIT 1";
+  $stmt = mysqli_prepare($con, $sql);
+  if (!$stmt) return false;
 
+  mysqli_stmt_bind_param($stmt, "s", $email);
+  mysqli_stmt_execute($stmt);
+
+  $result = mysqli_stmt_get_result($stmt);
+  $row = mysqli_fetch_assoc($result);
+
+  if ($row && password_verify($password, $row['password_hash'])) {
+    return $row;
+  }
+  return false;
 }
-
-function getAllUser(){
-
-}
-
-function addUser($user){
-    $con = getConnection();
-    $sql = "insert into users values(null, '{$user['username']}','{$user['password']}', '{$user['email']}')";
-    if(mysqli_query($con, $sql)){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-function deleteUser($id){
-
-}
-
-function updateUser($user){
-
-}
-
-?>
-
-

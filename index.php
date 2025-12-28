@@ -1,5 +1,5 @@
 <?php
 
-    header('location: Views/Login/login.html');
+    header('location: views/Login/login.php');
 
 ?>

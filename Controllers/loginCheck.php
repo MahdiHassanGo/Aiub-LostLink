@@ -1,28 +1,27 @@
 <?php
-    session_start();
-    //print_r($_POST);
-    //var_dump($_POST);
+session_start();
+require_once('../models/userModel.php');
 
-    if(isset($_POST['submit'])){
+if (!isset($_POST['submit'])) {
+  header('location: ../views/Loginlogin.php');
+  exit;
+}
 
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+$email = trim($_POST['email'] ?? '');
+$password = $_POST['password'] ?? '';
 
+if ($email === '' || $password === '') {
+  echo "null email/password";
+  exit;
+}
 
-    if($username == "" || $password == ""){
-        echo "null username/password";
-    }else{
-        if($username == $_SESSION['user']['username'] && $password == $_SESSION['user']['password']){
-            //echo "Login Success!";
-            //$_SESSION['status'] = true;
-            setcookie('status', 'true', time()+3000, '/');
-            $_SESSION['username'] = $username;
-            header('location: ../views/home.php');
-        }else{
-            echo "invalid username/password";
-        }
-    }
-    }else{
-        header('location: ../views/login.php');
-    }
-?>
+$user = login($email, $password);
+
+if ($user) {
+  $_SESSION['user'] = $user;
+  setcookie('status', 'true', time() + 3600, '/'); // 1 hour
+  header('location: ../views/Post/ShowPost.php');
+  exit;
+}
+
+echo "invalid email/password";
