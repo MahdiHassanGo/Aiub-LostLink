@@ -1,9 +1,7 @@
 <?php
-
-    session_start();
-    //session_destroy();
-    //unset($_SESSION['status']);
-    setcookie('status', 'true', time()-10, '/');
-    header('location: ../views/login.php');
-
-?>
+session_start();
+session_unset();
+session_destroy();
+setcookie('status', '', time() - 3600, '/');
+header('location: ../views/login.php');
+exit;

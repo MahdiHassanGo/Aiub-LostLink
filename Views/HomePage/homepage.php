@@ -1,4 +1,4 @@
-<?php
+S<?php
 session_start();
 
 // Protect page (must be logged in)

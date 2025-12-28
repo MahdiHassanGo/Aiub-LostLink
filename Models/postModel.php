@@ -1,10 +1,8 @@
 <?php
-require_once('db.php');
+require_once(__DIR__ . '/db.php');
 
-function getAllPosts(){
-    $con = getConnection();
-    $sql = "SELECT * FROM posts ORDER BY created_at DESC";
-    $result = mysqli_query($con, $sql);
-    return $result; // mysqli_result
+function getAllPosts() {
+  $con = getConnection();
+  $sql = "SELECT * FROM posts ORDER BY created_at DESC";
+  return mysqli_query($con, $sql);
 }
-?>
