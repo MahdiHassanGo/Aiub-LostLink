@@ -1,3 +1,4 @@
+
 <?php
 require_once('sessionCheck.php');
 require_once('../models/postModel.php');
