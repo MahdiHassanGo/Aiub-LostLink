@@ -78,31 +78,15 @@
 <div class="container">
     <h2>User Login</h2>
 
-    <form method="post" action="../controllers/loginCheck.php">
-        <fieldset>
-            <legend>Sign In</legend>
+  <form method="post" action="../controllers/loginCheck.php">
+    <input type="email" name="email">
+    <input type="password" name="password">
+    <input type="submit" name="submit" value="Login">
+</form>
 
-            <table>
-                <tr>
-                    <td>Username</td>
-                    <td><input type="text" name="username"></td>
-                </tr>
-                <tr>
-                    <td>Password</td>
-                    <td><input type="password" name="password"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="submit" name="submit" value="Login">
-                        <a href="signup.php">Create account</a>
-                    </td>
-                </tr>
-            </table>
-
-        </fieldset>
-    </form>
 </div>
 
 </body>
 </html>
+
+

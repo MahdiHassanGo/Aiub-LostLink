@@ -1,8 +1,7 @@
 <?php
-    session_start();
-
-    if(isset($_COOKIE['status']) !== true){
-        header('location: login.php');
-    }
-
+session_start();
+if(!isset($_COOKIE['status'])){
+    header('location: login.php');
+    exit;
+}
 ?>
