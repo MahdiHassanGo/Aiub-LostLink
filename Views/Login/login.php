@@ -36,9 +36,6 @@
         Don’t have an account? <a href="signup.php">Register here</a>
       </div>
 
-      <div class="note">
-        If you are testing with the demo hashes you pasted, try password: <b>password</b>
-      </div>
     </form>
   </div>
 </body>
