@@ -3,12 +3,12 @@ session_start();
 require_once('../models/postModel.php');
 
 if (!isset($_COOKIE['status']) || !isset($_SESSION['user'])) {
-  header('Location: /WebTechnology-Project/Views/Login/login.php');
+  header('Location: /WebTechnology-Project/views/Login/login.php');
   exit;
 }
 
 if (!isset($_POST['submit'])) {
-  header('Location: /WebTechnology-Project/Views/Post/create.php');
+  header('Location: /WebTechnology-Project/views/Post/create.php');
   exit;
 }
 
@@ -20,7 +20,7 @@ $category    = $_POST['category'] ?? '';
 $description = trim($_POST['description'] ?? '');
 
 if ($title==='' || $location==='' || $phone==='' || $student_id==='' || $description==='' || ($category!=='Lost' && $category!=='Found')) {
-  header('Location: /WebTechnology-Project/Views/Post/create.php?err=1');
+  header('Location: /WebTechnology-Project/views/Post/create.php?err=1');
   exit;
 }
 
@@ -34,9 +34,9 @@ $post = [
 ];
 
 if (addPost($post)) {
-  header('Location: /WebTechnology-Project/Views/Post/index.php?category=' . urlencode($category) . '&msg=posted');
+  header('Location: /WebTechnology-Project/views/Post/index.php?category=' . urlencode($category) . '&msg=posted');
   exit;
 }
 
-header('Location: /WebTechnology-Project/Views/Post/create.php?err=db');
+header('Location: /WebTechnology-Project/views/Post/create.php?err=db');
 exit;

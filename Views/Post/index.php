@@ -49,6 +49,7 @@ if ($category === 'Lost' || $category === 'Found') {
         <a href="index.php">All</a>
         <a href="index.php?category=Lost">Lost</a>
         <a href="index.php?category=Found">Found</a>
+         <a href="../AdminUserManagement/Admin-User-mgt.php"> AdminUserManagement</a>
         <a href="../../controllers/logout.php">Logout</a>
       </div>
     </div>

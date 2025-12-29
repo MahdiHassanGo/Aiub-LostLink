@@ -3,7 +3,7 @@ session_start();
 require_once('../models/userModel.php');
 
 if (!isset($_POST['submit'])) {
-  header('Location: /WebTechnology-Project/Views/Login/login.php');
+  header('Location: /WebTechnology-Project/views/Login/login.php');
   exit;
 }
 
@@ -11,18 +11,26 @@ $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
 if ($email === '' || $password === '') {
-  die("null email/password");
+  header('Location: /WebTechnology-Project/views/Login/login.php?msg=empty');
+  exit;
 }
 
 $user = login($email, $password);
 
 if ($user) {
-  $_SESSION['user'] = $user;
+  // Make session structure consistent (important for admin role checks)
+  $_SESSION['user'] = [
+    'id' => $user['id'],
+    'username' => $user['username'],
+    'email' => $user['email'],
+    'role' => $user['role']
+  ];
+
   setcookie('status', 'true', time() + 3600, '/');
 
-  // ✅ Login শেষে post list এ যাবে
-  header('Location: /WebTechnology-Project/Views/Post/index.php');
+  header('Location: /WebTechnology-Project/views/Post/index.php');
   exit;
 }
 
-die("invalid email/password");
+header('Location: /WebTechnology-Project/views/Login/login.php?msg=invalid');
+exit;
