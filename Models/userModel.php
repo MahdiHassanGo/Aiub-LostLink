@@ -10,7 +10,7 @@ function addUser($user) {
 
   $hash = password_hash($pass, PASSWORD_DEFAULT);
 
-  $sql = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, 'User')";
+$sql = "SELECT id, username, email, password_hash, role FROM users WHERE email=? LIMIT 1";
   $stmt = mysqli_prepare($con, $sql);
   if (!$stmt) return false;
 
@@ -35,4 +35,41 @@ function login($email, $password) {
     return $row;
   }
   return false;
+}
+
+
+
+
+/* =========================
+   Admin User Management
+   ========================= */
+
+function getAllUsers() {
+  $con = getConnection();
+
+  // assumes primary key column name is `id`
+  $sql = "SELECT id, username, email, role FROM users ORDER BY id DESC";
+  $result = mysqli_query($con, $sql);
+
+  $users = [];
+  if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+      $users[] = $row;
+    }
+  }
+  return $users;
+}
+
+function updateUserRole($userId, $newRole) {
+  $allowed = ['User', 'Admin', 'Moderator'];
+  if (!in_array($newRole, $allowed, true)) return false;
+
+  $con = getConnection();
+
+  $sql = "UPDATE users SET role=? WHERE id=?";
+  $stmt = mysqli_prepare($con, $sql);
+  if (!$stmt) return false;
+
+  mysqli_stmt_bind_param($stmt, "si", $newRole, $userId);
+  return mysqli_stmt_execute($stmt);
 }

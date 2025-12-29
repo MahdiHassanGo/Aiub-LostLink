@@ -3,12 +3,12 @@ session_start();
 require_once('../models/claimModel.php');
 
 if (!isset($_COOKIE['status']) || !isset($_SESSION['user'])) {
-  header('Location: /WebTechnology-Project/Views/Login/login.php');
+  header('Location: /WebTechnology-Project/views/Login/login.php');
   exit;
 }
 
 if (!isset($_POST['submit'])) {
-  header('Location: /WebTechnology-Project/Views/Post/index.php');
+  header('Location: /WebTechnology-Project/views/Post/index.php');
   exit;
 }
 
@@ -18,7 +18,7 @@ $phone = trim($_POST['claimant_phone'] ?? '');
 $message = trim($_POST['message'] ?? '');
 
 if ($post_id <= 0 || $name==='' || $phone==='') {
-  header('Location: /WebTechnology-Project/Views/Post/details.php?id=' . $post_id . '&err=1');
+  header('Location: /WebTechnology-Project/views/Post/details.php?id=' . $post_id . '&err=1');
   exit;
 }
 
@@ -33,9 +33,9 @@ $claim = [
 ];
 
 if (addClaim($claim)) {
-  header('Location: /WebTechnology-Project/Views/Post/details.php?id=' . $post_id . '&msg=claim_sent');
+  header('Location: /WebTechnology-Project/views/Post/details.php?id=' . $post_id . '&msg=claim_sent');
   exit;
 }
 
-header('Location: /WebTechnology-Project/Views/Post/details.php?id=' . $post_id . '&err=db');
+header('Location: /WebTechnology-Project/views/Post/details.php?id=' . $post_id . '&err=db');
 exit;
