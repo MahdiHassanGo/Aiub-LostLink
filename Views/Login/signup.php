@@ -22,7 +22,7 @@
   <div class="container">
     <h2>User Registration</h2>
 
-    <form method="post" action="../../controllers/signupCheck.php" enctype="application/x-www-form-urlencoded">
+    <form method="post" action="../../controllers/signup.php" enctype="application/x-www-form-urlencoded">
       <label>Username</label>
       <input type="text" name="username" required placeholder="Your name">
 
