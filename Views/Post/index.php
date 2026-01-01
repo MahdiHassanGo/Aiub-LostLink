@@ -52,6 +52,7 @@ if ($category === 'Lost' || $category === 'Found') {
         <a href="index.php?category=Found">Found</a>
 <?php if ($isAdmin): ?>
   <a href="../AdminUserManagement/Admin-User-mgt.php">AdminUserManagement</a>
+    <a href="../AdminAnalytics/AdminAnalytics.php">AdminAnalytics</a>
 <?php endif; ?>
         <a href="../../controllers/logout.php">Logout</a>
       </div>
