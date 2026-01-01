@@ -39,10 +39,13 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 </head>
 <body>
 
-<div class="top">
+<div class="top flex items-center">
   <div class="wrap">
     <h1>Admin User Management</h1>
     <div class="small">View users and change roles (User / Admin / Moderator).</div>
+  </div>
+  <div style="position:absolute;top:18px;right:24px;font-size:14px;">
+    Back to <a href="/WebTechnology-Project/Views/Post/index.php" style="color:#38bdf8;text-decoration:none;">Home</a>
   </div>
 </div>
 
@@ -94,7 +97,7 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
             </td>
             <td>
 <form method="POST" action="/WebTechnology-Project/controllers/adminManagementCheck.php">
->
+
                 <input type="hidden" name="user_id" value="<?php echo (int)$u['id']; ?>" />
                 <select name="role" <?php echo $isSelf ? 'disabled' : ''; ?>>
                   <option value="User" <?php echo ($role==='User'?'selected':''); ?>>User</option>

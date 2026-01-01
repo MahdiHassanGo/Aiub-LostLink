@@ -4,19 +4,35 @@ require_once(__DIR__ . '/db.php');
 function addUser($user) {
   $con = getConnection();
 
-  $username = trim($user['username']);
-  $email    = trim($user['email']);
-  $pass     = $user['password'];
+  $username = trim($user['username'] ?? '');
+  $email    = trim($user['email'] ?? '');
+  $pass     = $user['password'] ?? '';
+
+  if ($username === '' || $email === '' || $pass === '') return false;
+
+  // Check duplicate email
+  $checkSql = "SELECT id FROM users WHERE email=? LIMIT 1";
+  $checkStmt = mysqli_prepare($con, $checkSql);
+  if (!$checkStmt) return false;
+
+  mysqli_stmt_bind_param($checkStmt, "s", $email);
+  mysqli_stmt_execute($checkStmt);
+  $checkRes = mysqli_stmt_get_result($checkStmt);
+  if ($checkRes && mysqli_fetch_assoc($checkRes)) {
+    return false; // email already exists
+  }
 
   $hash = password_hash($pass, PASSWORD_DEFAULT);
 
-$sql = "SELECT id, username, email, password_hash, role FROM users WHERE email=? LIMIT 1";
+  // Insert new user (default role User)
+  $sql = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, 'User')";
   $stmt = mysqli_prepare($con, $sql);
   if (!$stmt) return false;
 
   mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hash);
   return mysqli_stmt_execute($stmt);
 }
+
 
 function login($email, $password) {
   $con = getConnection();
