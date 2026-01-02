@@ -4,18 +4,24 @@ require_once('../../models/postModel.php');
 
 $id = intval($_GET['id'] ?? 0);
 $post = ($id > 0) ? getPostById($id) : false;
+$suggestions = false;
+
+if ($post) {
+    $suggestions = getSmartSuggestions(
+        $post['id'],
+        $post['title'],
+        $post['location'],
+        $post['category']
+    );
+}
+
 
 $msg = $_GET['msg'] ?? '';
 $err = $_GET['err'] ?? '';
 ?>
  
 
-$id = intval($_GET['id'] ?? 0);
-$post = ($id > 0) ? getPostById($id) : false;
 
-$msg = $_GET['msg'] ?? '';
-$err = $_GET['err'] ?? '';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,6 +57,7 @@ $err = $_GET['err'] ?? '';
         <a href="index.php?category=Lost">Lost</a>
         <a href="index.php?category=Found">Found</a>
         <a href="create.php">+ Create</a>
+        <a href="./index.php">Back to home </a>
         <a href="../../controllers/logout.php">Logout</a>
       </div>
     </div>
@@ -106,6 +113,29 @@ $err = $_GET['err'] ?? '';
       </div>
 
     <?php endif; ?>
+    <?php if ($suggestions && mysqli_num_rows($suggestions) > 0): ?>
+  <div class="card">
+    <h3 style="margin:0 0 12px;">🔍 Similar <?= htmlspecialchars($post['category']) ?> Items</h3>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
+      <?php while ($s = mysqli_fetch_assoc($suggestions)): ?>
+        <div style="border:1px solid #e5e7eb;border-radius:10px;padding:12px;">
+          <div class="tag"><?= htmlspecialchars($s['category']) ?></div>
+          <h4 style="margin:6px 0 6px;font-size:15px;">
+            <?= htmlspecialchars($s['title']) ?>
+          </h4>
+          <p style="margin:0 0 8px;font-size:13px;color:#444;">
+            <?= htmlspecialchars($s['location']) ?>
+          </p>
+          <a class="btn" href="details.php?id=<?= (int)$s['id'] ?>" style="font-size:12px;">
+            View
+          </a>
+        </div>
+      <?php endwhile; ?>
+    </div>
+  </div>
+<?php endif; ?>
+
   </div>
 </body>
 </html>
