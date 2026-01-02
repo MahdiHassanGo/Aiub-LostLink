@@ -2,14 +2,20 @@
 require_once('../sessionCheck.php');
 require_once('../../models/postModel.php');
 $isAdmin = strtolower($_SESSION['user']['role'] ?? '') === 'admin';
+$search = $_GET['search'] ?? null;
+
 
 $category = $_GET['category'] ?? null;
 $msg = $_GET['msg'] ?? null;
 
-if ($category === 'Lost' || $category === 'Found') {
-  $result = getPostsByCategory($category);
+if (($category === 'Lost' || $category === 'Found') && $search) {
+    $result = searchPosts($search, $category);
+} elseif ($category === 'Lost' || $category === 'Found') {
+    $result = getPostsByCategory($category);
+} elseif ($search) {
+    $result = searchPosts($search);
 } else {
-  $result = getAllPosts();
+    $result = getAllPosts();
 }
 ?>
 
@@ -39,6 +45,7 @@ if ($category === 'Lost' || $category === 'Found') {
     .btn:hover{background:#1a5fd0}
     .msg{background:#dcfce7;border:1px solid #86efac;color:#166534;padding:10px;border-radius:10px;margin-bottom:12px}
     .empty{background:#fff;border:1px dashed #bbb;padding:16px;border-radius:12px}
+    .search{align-items:center;}
   </style>
 </head>
 <body>
@@ -73,7 +80,19 @@ if ($category === 'Lost' || $category === 'Found') {
     <?php elseif (mysqli_num_rows($result) === 0): ?>
       <div class="empty">No posts found.</div>
     <?php else: ?>
+      <div class="search" >
+  <form method="get" style="margin-bottom:14px;">
+  <input type="text" name="search" placeholder="Search by title or location" 
+         value="<?= htmlspecialchars($search ?? '') ?>" style="padding:6px; border-radius:6px; border:1px solid #ccc;">
+  <?php if ($category): ?>
+    <input type="hidden" name="category" value="<?= htmlspecialchars($category) ?>">
+  <?php endif; ?>
+  <button type="submit" style="padding:6px 10px; border:none; border-radius:6px; background:#2c7be5; color:#fff;">Search</button>
+</form>
+
+</div>
       <div class="grid">
+        
         <?php while($row = mysqli_fetch_assoc($result)): ?>
           <div class="card">
             <div class="tag"><?= htmlspecialchars($row['category']) ?></div>
