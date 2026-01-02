@@ -81,12 +81,12 @@
         </div>
 
         <div class="actions">
-          <form method="post" action="" style="display:inline;">
+          <form method="post" action="../../Controllers/notificationsCheck.php" style="display:inline;">
             <input type="hidden" name="action" value="mark_all_read">
             <button class="btn" type="submit">Mark all as read</button>
           </form>
 
-          <form method="post" action="" style="display:inline;">
+          <form method="post" action="../../Controllers/notificationsCheck.php" style="display:inline;">
             <input type="hidden" name="action" value="clear_all">
             <button class="btn secondary" type="submit">Clear all</button>
           </form>
@@ -127,7 +127,7 @@
 
               <div class="note-right">
                 <?php if ($isUnread): ?>
-                  <form method="post" action="" style="margin:0;">
+                  <form method="post" action="../../Controllers/notificationsCheck.php" style="margin:0;">
                     <input type="hidden" name="action" value="mark_read">
                     <input type="hidden" name="id" value="<?= (int)($n['id'] ?? 0) ?>">
                     <button class="small-btn" type="submit">Mark read</button>
