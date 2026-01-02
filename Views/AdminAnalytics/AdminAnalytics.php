@@ -36,7 +36,7 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
     <div class="sub">Simple analytics (tables). Live DB values. Zero-safe.</div>
   </div>
   <div class="back">
-    Back to <a href="/WebTechnology-Project/views/Post/index.php">Home</a>
+    Back to <a href="../../views/Post/index.php">Home</a>
   </div>
 </div>
 

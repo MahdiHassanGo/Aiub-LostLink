@@ -10,17 +10,41 @@ function addClaim($claim) {
   $stmt = mysqli_prepare($con, $sql);
   if (!$stmt) return false;
 
-  // user_id can be NULL
-  $userId = $claim['user_id'];
   mysqli_stmt_bind_param(
     $stmt,
     "iisss",
     $claim['post_id'],
-    $userId,
+    $claim['user_id'],
     $claim['claimant_name'],
     $claim['claimant_phone'],
     $claim['message']
   );
 
   return mysqli_stmt_execute($stmt);
+}
+
+/* ✅ THIS FUNCTION MUST BE HERE */
+function getClaimsByUser($userId) {
+    $con = getConnection();
+
+    $sql = "
+        SELECT 
+            c.id AS claim_id,
+            c.status,
+            c.created_at,
+            p.id AS post_id,
+            p.title,
+            p.category,
+            p.location
+        FROM claims c
+        JOIN posts p ON c.post_id = p.id
+        WHERE c.user_id = ?
+        ORDER BY c.created_at DESC
+    ";
+
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, "i", $userId);
+    mysqli_stmt_execute($stmt);
+
+    return mysqli_stmt_get_result($stmt);
 }

@@ -96,7 +96,7 @@ $err = $_GET['err'] ?? '';
 
       <div class="card">
         <h3 style="margin:0 0 10px;">Claim this item</h3>
-        <form method="post" action="../../controllers/claimCheck.php">
+<form method="post" action="../../controllers/claimCheck.php">
           <input type="hidden" name="post_id" value="<?= (int)$post['id'] ?>">
 
           <label>Your Name</label>
