@@ -1,6 +1,6 @@
 <?php
 require_once('../sessionCheck.php');
-require_once('/WebTechnology-Project/controllers/adminAnalyticsChecker.php
+require_once('../controllers/adminAnalyticsChecker.php
 ');
 
 function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
@@ -49,7 +49,7 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
     <div class="sub">Users + Posts analytics (live DB). Zero values are supported.</div>
   </div>
   <div class="back">
-    Back to <a href="/WebTechnology-Project/views/Post/index.php">Home</a>
+    Back to <a href="../views/Post/index.php">Home</a>
   </div>
 </div>
 

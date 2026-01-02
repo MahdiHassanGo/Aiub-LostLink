@@ -3,7 +3,7 @@ session_start();
 require_once('../models/userModel.php');
 
 if (!isset($_POST['submit'])) {
-  header('Location: /WebTechnology-Project/views/Login/signup.php');
+  header('Location: ../views/Login/signup.php');
   exit;
 }
 
@@ -18,7 +18,7 @@ if ($username === '' || $password === '' || $email === '') {
 $user = ['username' => $username, 'password' => $password, 'email' => $email];
 
 if (addUser($user)) {
-  header('Location: /WebTechnology-Project/views/Login/login.php');
+  header('Location: ../views/Login/login.php');
   exit;
 }
 

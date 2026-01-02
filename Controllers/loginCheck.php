@@ -3,7 +3,7 @@ session_start();
 require_once('../models/userModel.php');
 
 if (!isset($_POST['submit'])) {
-  header('Location: /WebTechnology-Project/views/Login/login.php');
+  header('Location: ../views/Login/login.php');
   exit;
 }
 
@@ -11,7 +11,7 @@ $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
 if ($email === '' || $password === '') {
-  header('Location: /WebTechnology-Project/views/Login/login.php?msg=empty');
+  header('Location: ../views/Login/login.php?msg=empty');
   exit;
 }
 
@@ -28,7 +28,7 @@ if ($user) {
 
   setcookie('status', 'true', time() + 3600, '/');
 
-  header('Location: /WebTechnology-Project/views/Post/index.php');
+  header('Location: ../views/Post/index.php');
   exit;
 }
 
