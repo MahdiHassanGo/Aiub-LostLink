@@ -6,6 +6,23 @@ function getAllPosts() {
   $sql = "SELECT * FROM posts ORDER BY created_at DESC";
   return mysqli_query($con, $sql);
 }
+function searchPosts($search, $category = null) {
+    $con = getConnection();
+    $searchTerm = "%$search%";
+
+    if ($category === 'Lost' || $category === 'Found') {
+        $sql = "SELECT * FROM posts WHERE (title LIKE ? OR location LIKE ?) AND category=? ORDER BY created_at DESC";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "sss", $searchTerm, $searchTerm, $category);
+    } else {
+        $sql = "SELECT * FROM posts WHERE title LIKE ? OR location LIKE ? ORDER BY created_at DESC";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $searchTerm, $searchTerm);
+    }
+
+    mysqli_stmt_execute($stmt);
+    return mysqli_stmt_get_result($stmt);
+}
 
 function getPostsByCategory($category) {
   $con = getConnection();
