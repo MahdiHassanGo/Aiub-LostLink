@@ -2,6 +2,7 @@
 require_once('sessionCheck.php');
 require_once('../models/postModel.php');
 
+
 $result = getAllPosts();
 ?>
 <!DOCTYPE html>

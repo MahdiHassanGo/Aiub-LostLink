@@ -48,3 +48,5 @@ function getClaimsByUser($userId) {
 
     return mysqli_stmt_get_result($stmt);
 }
+
+
