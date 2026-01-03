@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once('../models/postModel.php');
+require_once('/../Models/notificationModel.php');
+
 
 if (!isset($_COOKIE['status']) || !isset($_SESSION['user'])) {
   header('Location: /WebTechnology-Project/views/Login/login.php');
@@ -37,6 +39,8 @@ if (addPost($post)) {
   header('Location: /WebTechnology-Project/views/Post/index.php?category=' . urlencode($category) . '&msg=posted');
   exit;
 }
+addNotification($_SESSION['user']['id'], 'post', 'Post created', 'Your post was created.', '/WebTechnology-Project/Views/Post/index.php');
+
 
 header('Location: /WebTechnology-Project/views/Post/create.php?err=db');
 exit;

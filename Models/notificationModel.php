@@ -1,9 +1,12 @@
 <?php
-require_once(__DIR__ . "/db.php");
+require_once(__DIR__ . '/db.php');
 
 function getUserIdFromSession() {
   if (isset($_SESSION['user']) && isset($_SESSION['user']['id'])) {
     return (int)$_SESSION['user']['id'];
+  }
+  if (isset($_SESSION['user_id'])) {
+    return (int)$_SESSION['user_id'];
   }
   return 0;
 }
@@ -17,8 +20,9 @@ function addNotification($userId, $type, $title, $body, $link) {
   $body = mysqli_real_escape_string($con, $body);
   $link = mysqli_real_escape_string($con, $link);
 
-  $sql = "INSERT INTO notifications (user_id, type, title, body, link)
-          VALUES ($userId, '$type', '$title', '$body', '$link')";
+  $sql = "INSERT INTO notifications (user_id, type, title, body, link, is_read)
+          VALUES ($userId, '$type', '$title', '$body', '$link', 0)";
+
   return mysqli_query($con, $sql);
 }
 
@@ -58,21 +62,21 @@ function getUnreadNotificationCount($userId) {
   return 0;
 }
 
-function clearNotifications($userId) {
-  $con = getConnection();
-  $userId = (int)$userId;
-  return mysqli_query($con, "DELETE FROM notifications WHERE user_id = $userId");
-}
-
 function markAllNotificationsRead($userId) {
   $con = getConnection();
   $userId = (int)$userId;
   return mysqli_query($con, "UPDATE notifications SET is_read = 1 WHERE user_id = $userId");
 }
 
-function markNotificationRead($id, $userId) {
+function clearNotifications($userId) {
   $con = getConnection();
-  $id = (int)$id;
   $userId = (int)$userId;
-  return mysqli_query($con, "UPDATE notifications SET is_read = 1 WHERE id = $id AND user_id = $userId");
+  return mysqli_query($con, "DELETE FROM notifications WHERE user_id = $userId");
+}
+
+function markNotificationRead($notificationId, $userId) {
+  $con = getConnection();
+  $notificationId = (int)$notificationId;
+  $userId = (int)$userId;
+  return mysqli_query($con, "UPDATE notifications SET is_read = 1 WHERE id = $notificationId AND user_id = $userId");
 }

@@ -8,6 +8,7 @@ if (!isset($_COOKIE['status']) || $_COOKIE['status'] !== 'true' || !isset($_SESS
 }
 
 $userId = getUserIdFromSession();
+
 if ($userId <= 0) {
   header('Location: ../Views/Login/login.php');
   exit;
@@ -27,7 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id > 0) markNotificationRead($id, $userId);
   }
 
-  header("Location: notificationsCheck.php");
+  if (isset($_POST['ajax']) && $_POST['ajax'] === '1') {
+    header('Content-Type: application/json');
+    echo json_encode(['ok' => true]);
+    exit;
+  }
+
+  header("Location: /WebTechnology-Project/Controllers/notificationsCheck.php");
   exit;
 }
 
@@ -35,3 +42,4 @@ $notifications = getNotificationsByUser($userId);
 $unreadCount = getUnreadNotificationCount($userId);
 
 require_once(__DIR__ . '/../Views/Notification/notifications.php');
+?>

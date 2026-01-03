@@ -23,7 +23,7 @@
   <div class="container">
     <h2>User Login</h2>
 
-    <form method="post" action="../../controllers/loginCheck.php">
+    <form method="post" action="../../Controllers/loginCheck.php">
       <label>Email</label>
       <input type="email" name="email" required placeholder="name@aiub.edu">
 
