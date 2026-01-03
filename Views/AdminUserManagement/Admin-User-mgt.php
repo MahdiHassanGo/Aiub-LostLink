@@ -45,7 +45,7 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
     <div class="small">View users and change roles (User / Admin / Moderator).</div>
   </div>
   <div style="position:absolute;top:18px;right:24px;font-size:14px;">
-    Back to <a href="/WebTechnology-Project/Views/Post/index.php" style="color:#38bdf8;text-decoration:none;">Home</a>
+    Back to <a href="../../views/Post/index.php" style="color:#38bdf8;text-decoration:none;">Home</a>
   </div>
 </div>
 
@@ -96,7 +96,7 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
               </span>
             </td>
             <td>
-<form method="POST" action="/WebTechnology-Project/controllers/adminManagementCheck.php">
+<form method="POST" action="../controllers/adminManagementCheck.php">
 
                 <input type="hidden" name="user_id" value="<?php echo (int)$u['id']; ?>" />
                 <select name="role" <?php echo $isSelf ? 'disabled' : ''; ?>>

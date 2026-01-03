@@ -6,6 +6,69 @@ function getAllPosts() {
   $sql = "SELECT * FROM posts ORDER BY created_at DESC";
   return mysqli_query($con, $sql);
 }
+function searchPosts($search, $category = null) {
+    $con = getConnection();
+    $searchTerm = "%$search%";
+
+    if ($category === 'Lost' || $category === 'Found') {
+        $sql = "SELECT * FROM posts WHERE (title LIKE ? OR location LIKE ?) AND category=? ORDER BY created_at DESC";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "sss", $searchTerm, $searchTerm, $category);
+    } else {
+        $sql = "SELECT * FROM posts WHERE title LIKE ? OR location LIKE ? ORDER BY created_at DESC";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $searchTerm, $searchTerm);
+    }
+
+    mysqli_stmt_execute($stmt);
+    return mysqli_stmt_get_result($stmt);
+}
+
+function getSmartSuggestions($postId, $title, $location, $category, $limit = 4) {
+    $con = getConnection();
+
+    $keywords = preg_split('/\s+/', strtolower($title));
+    $likeParts = [];
+    $params = [];
+    $types = "";
+
+    foreach ($keywords as $word) {
+        if (strlen($word) >= 3) {
+            $likeParts[] = "title LIKE ?";
+            $params[] = "%" . $word . "%";
+            $types .= "s";
+        }
+    }
+
+
+    if (empty($likeParts)) {
+        $likeParts[] = "location LIKE ?";
+        $params[] = "%" . $location . "%";
+        $types .= "s";
+    }
+
+    $sql = "
+        SELECT id, title, location, category, created_at
+        FROM posts
+        WHERE id != ?
+          AND category = ?
+          AND (" . implode(" OR ", $likeParts) . ")
+        ORDER BY created_at DESC
+        LIMIT ?
+    ";
+
+    $stmt = mysqli_prepare($con, $sql);
+
+ 
+    $types = "is" . $types . "i";
+    $params = array_merge([$postId, $category], $params, [$limit]);
+
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+    mysqli_stmt_execute($stmt);
+
+    return mysqli_stmt_get_result($stmt);
+}
+
 
 function getPostsByCategory($category) {
   $con = getConnection();
@@ -52,3 +115,5 @@ function addPost($post) {
 
   return mysqli_stmt_execute($stmt);
 }
+
+

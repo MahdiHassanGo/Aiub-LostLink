@@ -5,12 +5,12 @@ require_once('/../Models/notificationModel.php');
 
 
 if (!isset($_COOKIE['status']) || !isset($_SESSION['user'])) {
-  header('Location: /WebTechnology-Project/views/Login/login.php');
+  header('Location: ../views/Login/login.php');
   exit;
 }
 
 if (!isset($_POST['submit'])) {
-  header('Location: /WebTechnology-Project/views/Post/create.php');
+  header('Location: ../views/Post/create.php');
   exit;
 }
 
@@ -22,7 +22,7 @@ $category    = $_POST['category'] ?? '';
 $description = trim($_POST['description'] ?? '');
 
 if ($title==='' || $location==='' || $phone==='' || $student_id==='' || $description==='' || ($category!=='Lost' && $category!=='Found')) {
-  header('Location: /WebTechnology-Project/views/Post/create.php?err=1');
+  header('Location: ../views/Post/create.php?err=1');
   exit;
 }
 
@@ -36,11 +36,11 @@ $post = [
 ];
 
 if (addPost($post)) {
-  header('Location: /WebTechnology-Project/views/Post/index.php?category=' . urlencode($category) . '&msg=posted');
+  header('Location: ../views/Post/index.php?category=' . urlencode($category) . '&msg=posted');
   exit;
 }
 addNotification($_SESSION['user']['id'], 'post', 'Post created', 'Your post was created.', '/WebTechnology-Project/Views/Post/index.php');
 
 
-header('Location: /WebTechnology-Project/views/Post/create.php?err=db');
+header('Location: ../views/Post/create.php?err=db');
 exit;

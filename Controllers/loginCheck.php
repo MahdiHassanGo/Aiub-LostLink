@@ -4,7 +4,7 @@ require_once('../models/userModel.php');
 require_once('../Models/notificationModel.php');
 
 if (!isset($_POST['submit'])) {
-  header('Location: /WebTechnology-Project/views/Login/login.php');
+  header('Location: ../views/Login/login.php');
   exit;
 }
 
@@ -14,7 +14,7 @@ $password = $_POST['password'] ?? '';
 $user = login($email, $password);
 
 if ($email === '' || $password === '') {
-  header('Location: /WebTechnology-Project/views/Login/login.php?msg=empty');
+  header('Location: ../views/Login/login.php?msg=empty');
   exit;
 }
 
@@ -36,6 +36,7 @@ if ($user) {
   addNotification($_SESSION['user']['id'], 'info', 'Login successful', 'You just logged in.', '/WebTechnology-Project/views/HomePage/homepage.php');
 
   header('Location: /WebTechnology-Project/views/Post/index.php');
+  header('Location: ../views/Post/index.php');
   exit;
 }
 
