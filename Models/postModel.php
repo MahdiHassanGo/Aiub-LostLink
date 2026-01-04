@@ -115,3 +115,5 @@ function addPost($post) {
 
   return mysqli_stmt_execute($stmt);
 }
+
+

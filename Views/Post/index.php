@@ -63,6 +63,7 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
   <a href="../AdminUserManagement/Admin-User-mgt.php">AdminUserManagement</a>
     <a href="../AdminAnalytics/AdminAnalytics.php">AdminAnalytics</a>
 <?php endif; ?>
+        <a href="../../Controllers/notificationsCheck.php">Notifications</a>
         <a href="../../controllers/logout.php">Logout</a>
       </div>
     </div>

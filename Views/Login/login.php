@@ -150,41 +150,9 @@
 
 <body>
 
-    <!-- SAME LOGIC: method, action, and input names (email, password, submit) -->
     <form method="post" action="../../Controllers/loginCheck.php">
-        <fieldset>
-            <legend>Log in</legend>
-
-            <table>
-                <tr class="line">
-                    <td class="ico">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 12a4.5 4.5 0 1 0-4.5-4.5A4.51 4.51 0 0 0 12 12Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
-                        </svg>
-                    </td>
-                    <td>
-                        <input type="email" name="email" value="" required placeholder="name@aiub.edu">
-                    </td>
-                </tr>
-
-                <tr class="line">
-                    <td class="ico">
-                        <svg viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4Z"/>
-                        </svg>
-                    </td>
-                    <td>
-                        <input type="password" name="password" value="" required placeholder="Your password">
-                    </td>
-                </tr>
-
-                <tr>
-                    <td colspan="2" class="opt">
-                        <div class="optBox">
-                            <label class="remember">
-                                <input type="checkbox" name="remember" value="1">
-                                Remember Me
-                            </label>
+      <label>Email</label>
+      <input type="email" name="email" required placeholder="name@aiub.edu">
 
                             <a href="#">Forgot Password?</a>
                         </div>

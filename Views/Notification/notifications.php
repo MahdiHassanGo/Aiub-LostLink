@@ -65,8 +65,8 @@
       <div class="nav-inner">
         <div class="brand">AIUB LostLink</div>
         <div class="nav-links">
-          <a href="notificationsCheck.php">Notifications</a>
-          <a href="logout.php">Logout</a>
+          <a href="/WebTechnology-Project/Controllers/logout.php">Logout</a>
+          <a href="/WebTechnology-Project/views/HomePage/homepage.php">Home</a>
         </div>
       </div>
     </div>
@@ -81,12 +81,12 @@
         </div>
 
         <div class="actions">
-          <form method="post" action="" style="display:inline;">
+          <form method="post" action="../../Controllers/notificationsCheck.php" class="notifForm" style="display:inline;">
             <input type="hidden" name="action" value="mark_all_read">
             <button class="btn" type="submit">Mark all as read</button>
           </form>
 
-          <form method="post" action="" style="display:inline;">
+          <form method="post" action="../../Controllers/notificationsCheck.php" class="notifForm" style="display:inline;">
             <input type="hidden" name="action" value="clear_all">
             <button class="btn secondary" type="submit">Clear all</button>
           </form>
@@ -127,7 +127,7 @@
 
               <div class="note-right">
                 <?php if ($isUnread): ?>
-                  <form method="post" action="" style="margin:0;">
+                  <form method="post" action="../../Controllers/notificationsCheck.php" class="notifForm" style="display:inline;">
                     <input type="hidden" name="action" value="mark_read">
                     <input type="hidden" name="id" value="<?= (int)($n['id'] ?? 0) ?>">
                     <button class="small-btn" type="submit">Mark read</button>
@@ -145,5 +145,23 @@
 
     </div>
   </div>
+
+  <script>
+    var forms = document.getElementsByClassName('notifForm');
+
+    for (var i = 0; i < forms.length; i++) {
+      forms[i].addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var form = this;
+        var data = new FormData(form);
+        data.append('ajax', '1');
+
+        fetch(form.action, { method: 'POST', body: data })
+          .then(function (res) { return res.json(); })
+          .then(function () { window.location.reload(); });
+      });
+    }
+  </script>
 </body>
 </html>
