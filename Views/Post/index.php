@@ -58,6 +58,7 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
         <a href="index.php?category=Lost">Lost</a>
         <a href="index.php?category=Found">Found</a>
         <a href="../ClaimRequest/ClaimReq.php">My Claims</a>
+<a href="../../controllers/exportMyProfilePdf.php">Download My Details (PDF)</a>
 
 <?php if ($isAdmin): ?>
   <a href="../AdminUserManagement/Admin-User-mgt.php">AdminUserManagement</a>

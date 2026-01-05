@@ -89,3 +89,17 @@ function updateUserRole($userId, $newRole) {
   mysqli_stmt_bind_param($stmt, "si", $newRole, $userId);
   return mysqli_stmt_execute($stmt);
 }
+function getUserById($id) {
+  $con = getConnection();
+
+  // adjust columns if your table doesn't have created_at
+  $sql = "SELECT id, username, email, role, created_at FROM users WHERE id=? LIMIT 1";
+  $stmt = mysqli_prepare($con, $sql);
+  if (!$stmt) return false;
+
+  mysqli_stmt_bind_param($stmt, "i", $id);
+  mysqli_stmt_execute($stmt);
+
+  $res = mysqli_stmt_get_result($stmt);
+  return mysqli_fetch_assoc($res);
+}

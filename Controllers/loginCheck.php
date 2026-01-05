@@ -32,5 +32,5 @@ if ($user) {
   exit;
 }
 
-header('Location: /WebTechnology-Project/views/Login/login.php?msg=invalid');
+header('Location: ../views/Login/login.php?msg=invalid');
 exit;
