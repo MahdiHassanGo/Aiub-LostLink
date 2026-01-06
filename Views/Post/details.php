@@ -117,6 +117,9 @@ $err = $_GET['err'] ?? '';
     <?php endif; ?>
     <?php if ($suggestions && mysqli_num_rows($suggestions) > 0): ?>
   <div class="card">
+
+  <!-- Smart feature -->
+
     <h3 style="margin:0 0 12px;">🔍 Similar <?= htmlspecialchars($post['category']) ?> Items</h3>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">
