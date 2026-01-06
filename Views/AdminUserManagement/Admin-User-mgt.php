@@ -1,13 +1,19 @@
 <?php
-require_once('../sessionCheck.php');
-require_once('../../controllers/adminManagementCheck.php');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+require_once(__DIR__ . '/../../controllers/adminCheck.php');
+require_once(__DIR__ . '/../../models/userModel.php');
 
 $msg = $_GET['msg'] ?? null;
+
+$users = getAllUsers();
 
 $currentUserId = $_SESSION['user']['id'] ?? $_SESSION['user']['user_id'] ?? $_SESSION['id'] ?? null;
 
 function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +23,7 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
   <style>
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;color:#111}
-    .top{background:#0f172a;color:#fff;padding:14px 0}
+    .top{background:#0f172a;color:#fff;padding:14px 0; position:relative;}
     .wrap{width:1100px;max-width:94vw;margin:0 auto}
     .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 8px 22px rgba(15,23,42,.06);padding:16px;margin:18px 0}
     h1{margin:0;font-size:20px}
@@ -35,17 +41,19 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
     button:disabled{opacity:.6;cursor:not-allowed}
     .small{font-size:12px;color:#64748b}
     .row-actions{display:flex;gap:10px;align-items:center}
+    .back{position:absolute;top:18px;right:24px;font-size:14px;}
+    .back a{color:#38bdf8;text-decoration:none}
   </style>
 </head>
 <body>
 
-<div class="top flex items-center">
+<div class="top">
   <div class="wrap">
     <h1>Admin User Management</h1>
     <div class="small">View users and change roles (User / Admin / Moderator).</div>
   </div>
-  <div style="position:absolute;top:18px;right:24px;font-size:14px;">
-    Back to <a href="../../views/Post/index.php" style="color:#38bdf8;text-decoration:none;">Home</a>
+  <div class="back">
+    Back to <a href="../Post/index.php">Home</a>
   </div>
 </div>
 
@@ -85,6 +93,7 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
             if ($role === 'Moderator') $badgeClass = 'moderator';
 
             $isSelf = ($currentUserId !== null && (int)$u['id'] === (int)$currentUserId);
+            $formId = 'f_role_' . (int)$u['id'];
           ?>
           <tr>
             <td><?php echo $i++; ?></td>
@@ -95,29 +104,29 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
                 <?php echo esc($role); ?><?php echo $isSelf ? ' (You)' : ''; ?>
               </span>
             </td>
-            <td>
-<form method="POST" action="../controllers/adminManagementCheck.php">
 
-                <input type="hidden" name="user_id" value="<?php echo (int)$u['id']; ?>" />
-                <select name="role" <?php echo $isSelf ? 'disabled' : ''; ?>>
-                  <option value="User" <?php echo ($role==='User'?'selected':''); ?>>User</option>
-                  <option value="Moderator" <?php echo ($role==='Moderator'?'selected':''); ?>>Moderator</option>
-                  <option value="Admin" <?php echo ($role==='Admin'?'selected':''); ?>>Admin</option>
-                </select>
-            </td>
             <td>
+              <select name="role" form="<?php echo esc($formId); ?>" <?php echo $isSelf ? 'disabled' : ''; ?>>
+                <option value="User" <?php echo ($role==='User'?'selected':''); ?>>User</option>
+                <option value="Moderator" <?php echo ($role==='Moderator'?'selected':''); ?>>Moderator</option>
+                <option value="Admin" <?php echo ($role==='Admin'?'selected':''); ?>>Admin</option>
+              </select>
+            </td>
+
+            <td>
+              <form id="<?php echo esc($formId); ?>" method="POST" action="../../controllers/adminManagementCheck.php">
+                <input type="hidden" name="user_id" value="<?php echo (int)$u['id']; ?>" />
                 <div class="row-actions">
-                  <button type="submit" <?php echo $isSelf ? 'disabled' : ''; ?>>Update</button>
+                  <button type="submit" name="submit" <?php echo $isSelf ? 'disabled' : ''; ?>>Update</button>
                   <span class="small">ID: <?php echo (int)$u['id']; ?></span>
                 </div>
               </form>
             </td>
+
           </tr>
         <?php endforeach; ?>
       <?php else: ?>
-        <tr>
-          <td colspan="6">No users found.</td>
-        </tr>
+        <tr><td colspan="6">No users found.</td></tr>
       <?php endif; ?>
       </tbody>
     </table>
