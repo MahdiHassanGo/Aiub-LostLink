@@ -180,6 +180,27 @@ function getAllPostsForReview() {
   }
   return $posts;
 }
+function updatePendingPostStatus($postId, $newStatus) {
+  $allowed = ['approved', 'rejected'];
+  $newStatus = strtolower(trim($newStatus));
+
+  if (!in_array($newStatus, $allowed, true)) return false;
+
+  $con = getConnection();
+
+  $sql = "UPDATE posts
+          SET status=?
+          WHERE id=? AND LOWER(status)='pending'";
+
+  $stmt = mysqli_prepare($con, $sql);
+  if (!$stmt) return false;
+
+  mysqli_stmt_bind_param($stmt, "si", $newStatus, $postId);
+  mysqli_stmt_execute($stmt);
+
+  return (mysqli_stmt_affected_rows($stmt) > 0);
+}
+
 
 function updatePostStatus($postId, $newStatus) {
   $allowed = ['pending', 'approved', 'rejected'];
