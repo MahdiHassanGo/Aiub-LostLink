@@ -4,7 +4,9 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 require_once(__DIR__ . '/sessionCheck.php');
 require_once(__DIR__ . '/../models/claimModel.php');
 require_once(__DIR__ . '/../models/notificationModel.php');
-require_once(__DIR__ . '/../models/postModel.php');
+require_once('../Models/messageModel.php');
+require_once('../Models/postModel.php');
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('location: ../views/Post/index.php');
@@ -41,6 +43,19 @@ $claim = [
 ];
 
 if (addClaim($claim)) {
+
+    if ($message !== '') {
+  $post = getPostById($post_id);
+
+  if ($post && isset($post['user_id'])) {
+    $ownerId = (int)$post['user_id'];
+
+    if ($ownerId > 0 && $ownerId != $userId) {
+      createMessage($userId, $ownerId, $message);
+    }
+  }
+}
+
 
     // notify claimant (current user)
     addNotification(

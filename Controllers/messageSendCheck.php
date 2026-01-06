@@ -7,7 +7,8 @@ if (!isset($_COOKIE['status']) || !isset($_SESSION['user'])) {
   exit;
 }
 
-$userId = getUserIdFromSession();
+$userId = (int)$_SESSION['user']['id'];
+
 if ($userId <= 0) {
   header('Location: /WebTechnology-Project/Views/Login/login.php');
   exit;

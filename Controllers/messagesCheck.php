@@ -1,13 +1,14 @@
 <?php
 session_start();
-require_once(__DIR__ . '/../Models/messageModel.php');
+require_once('../Models/messageModel.php');
 
 if (!isset($_COOKIE['status']) || !isset($_SESSION['user'])) {
   header('Location: /WebTechnology-Project/Views/Login/login.php');
   exit;
 }
 
-$userId = getUserIdFromSession();
+$userId = (int)$_SESSION['user']['id'];
+
 if ($userId <= 0) {
   header('Location: /WebTechnology-Project/Views/Login/login.php');
   exit;
