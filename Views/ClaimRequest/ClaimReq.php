@@ -1,6 +1,6 @@
 <?php
 
-require_once('../sessionCheck.php');
+require_once( '../../controllers/sessionCheck.php');
 require_once('../../models/claimModel.php');
 
 $userId = $_SESSION['user']['id'];

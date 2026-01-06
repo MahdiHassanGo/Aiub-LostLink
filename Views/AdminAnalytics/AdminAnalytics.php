@@ -1,5 +1,5 @@
 <?php
-require_once('../sessionCheck.php');
+require_once( '../../controllers/sessionCheck.php');
 require_once('../../controllers/adminAnalyticsCheck.php');
 
 function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }

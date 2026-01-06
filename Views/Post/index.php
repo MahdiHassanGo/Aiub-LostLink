@@ -1,5 +1,7 @@
 <?php
-require_once('../sessionCheck.php');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+require_once( '../../controllers/sessionCheck.php');
 require_once('../../models/postModel.php');
 $isAdmin = strtolower($_SESSION['user']['role'] ?? '') === 'admin';
 $search = $_GET['search'] ?? null;
