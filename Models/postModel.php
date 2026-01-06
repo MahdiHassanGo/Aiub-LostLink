@@ -159,3 +159,40 @@ function addPost($post) {
 
   return mysqli_stmt_execute($stmt);
 }
+
+
+function getAllPostsForReview() {
+  $con = getConnection();
+
+  $sql = "SELECT p.id, p.user_id, p.posted_by_username, p.posted_by_email,
+                 p.title, p.location, p.phone, p.student_id, p.category,
+                 p.description, p.status, p.created_at
+          FROM posts p
+          ORDER BY p.created_at DESC";
+
+  $result = mysqli_query($con, $sql);
+
+  $posts = [];
+  if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+      $posts[] = $row;
+    }
+  }
+  return $posts;
+}
+
+function updatePostStatus($postId, $newStatus) {
+  $allowed = ['pending', 'approved', 'rejected'];
+  $newStatus = strtolower(trim($newStatus));
+
+  if (!in_array($newStatus, $allowed, true)) return false;
+
+  $con = getConnection();
+
+  $sql = "UPDATE posts SET status=? WHERE id=?";
+  $stmt = mysqli_prepare($con, $sql);
+  if (!$stmt) return false;
+
+  mysqli_stmt_bind_param($stmt, "si", $newStatus, $postId);
+  return mysqli_stmt_execute($stmt);
+}
