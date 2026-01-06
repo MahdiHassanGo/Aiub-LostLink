@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once(__DIR__ . '/sessionCheck.php');
+require_once('../../controllers/sessionCheck.php');
 require_once('../../models/postModel.php');
 
 $id = intval($_GET['id'] ?? 0);

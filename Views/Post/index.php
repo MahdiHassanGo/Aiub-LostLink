@@ -105,6 +105,8 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
             <p class="meta">
               <b>Location:</b> <?= htmlspecialchars($row['location']) ?><br>
               <b>Posted:</b> <?= htmlspecialchars($row['created_at']) ?>
+              <b>Posted by:</b> <?= htmlspecialchars($row['posted_by_username'] ?? 'Unknown') ?><br>
+
             </p>
             <a class="btn" href="details.php?id=<?= (int)$row['id'] ?>">View Details</a>
           </div>
