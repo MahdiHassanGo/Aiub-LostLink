@@ -1,13 +1,15 @@
 <?php
+require_once(__DIR__ . '/../../controllers/sessionCheck.php');
+require_once(__DIR__ . '/../../models/claimModel.php');
 
-require_once( '../../controllers/sessionCheck.php');
-require_once('../../models/claimModel.php');
+$userId = (int)($_SESSION['user']['id'] ?? 0);
+if ($userId <= 0) {
+  header('location: ../Login/login.php');
+  exit;
+}
 
-$userId = $_SESSION['user']['id'];
 $claims = getClaimsByUser($userId);
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,22 +37,22 @@ $claims = getClaimsByUser($userId);
   <?php else: ?>
     <?php while ($row = mysqli_fetch_assoc($claims)): ?>
       <div class="card">
-        <div class="tag"><?= htmlspecialchars($row['category']) ?></div>
+        <div class="tag"><?php echo htmlspecialchars($row['category']); ?></div>
 
         <h3 style="margin:6px 0">
-          <?= htmlspecialchars($row['title']) ?>
+          <?php echo htmlspecialchars($row['title']); ?>
         </h3>
 
         <p style="margin:0 0 8px;color:#444">
-          <b>Location:</b> <?= htmlspecialchars($row['location']) ?><br>
-          <b>Requested on:</b> <?= htmlspecialchars($row['created_at']) ?>
+          <b>Location:</b> <?php echo htmlspecialchars($row['location']); ?><br>
+          <b>Requested on:</b> <?php echo htmlspecialchars($row['created_at']); ?>
         </p>
 
-        <p class="status <?= $row['status'] ?>">
-          Status: <?= $row['status'] ?>
+        <p class="status <?php echo htmlspecialchars($row['status']); ?>">
+          Status: <?php echo htmlspecialchars($row['status']); ?>
         </p>
 
-        <a class="btn" href="../Post/details.php?id=<?= (int)$row['post_id'] ?>">
+        <a class="btn" href="../Post/details.php?id=<?php echo (int)$row['post_id']; ?>">
           View Post
         </a>
       </div>
