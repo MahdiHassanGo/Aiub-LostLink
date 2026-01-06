@@ -1,6 +1,10 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+
 session_start();
-require_once('../models/postModel.php');
+require_once(__DIR__ . '/../models/postModel.php');
 require_once(__DIR__ . '/../models/notificationModel.php');
 
 if (!isset($_COOKIE['status']) || !isset($_SESSION['user'])) {
@@ -25,7 +29,6 @@ if ($title==='' || $location==='' || $phone==='' || $student_id==='' || $descrip
   exit;
 }
 
-// ✅ define these from logged-in session
 $userId   = (int)($_SESSION['user']['id'] ?? 0);
 $username = $_SESSION['user']['username'] ?? '';
 $email    = $_SESSION['user']['email'] ?? '';
@@ -34,19 +37,21 @@ $post = [
   'user_id' => $userId,
   'posted_by_username' => $username,
   'posted_by_email' => $email,
-
   'title' => $title,
   'location' => $location,
   'phone' => $phone,
   'student_id' => $student_id,
   'category' => $category,
   'description' => $description,
-
-  'status' => 'pending' 
+  'status' => 'pending' // ✅ always pending on create
 ];
 
 if (addPost($post)) {
-  addNotification($userId, 'post', 'Post created', 'Your post was created and is pending approval.', '/WebTechnology-Project/Views/Post/index.php');
+  // optional notification
+  if (function_exists('addNotification')) {
+    addNotification($userId, 'post', 'Post created', 'Your post is pending approval.', '/WebTechnology-Project/Views/Post/index.php');
+  }
+
   header('Location: ../views/Post/index.php?category=' . urlencode($category) . '&msg=posted');
   exit;
 }
