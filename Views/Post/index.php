@@ -97,21 +97,26 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
 
 </div>
       <div class="grid">
-        
-        <?php while($row = mysqli_fetch_assoc($result)): ?>
-          <div class="card">
-            <div class="tag"><?= htmlspecialchars($row['category']) ?></div>
-            <h3 class="title"><?= htmlspecialchars($row['title']) ?></h3>
-            <p class="meta">
-              <b>Location:</b> <?= htmlspecialchars($row['location']) ?><br>
-              <b>Posted:</b> <?= htmlspecialchars($row['created_at']) ?>
-              <b>Posted by:</b> <?= htmlspecialchars($row['posted_by_username'] ?? 'Unknown') ?><br>
+  <?php while($row = mysqli_fetch_assoc($result)): ?>
+    <?php
+      // show ONLY approved
+      if (strtolower($row['status'] ?? '') !== 'approved') {
+        continue;
+      }
+    ?>
+    <div class="card">
+      <div class="tag"><?= htmlspecialchars($row['category']) ?></div>
+      <h3 class="title"><?= htmlspecialchars($row['title']) ?></h3>
+      <p class="meta">
+        <b>Location:</b> <?= htmlspecialchars($row['location']) ?><br>
+        <b>Posted:</b> <?= htmlspecialchars($row['created_at']) ?><br>
+        <b>Posted by:</b> <?= htmlspecialchars($row['posted_by_username'] ?? 'Unknown') ?><br>
+      </p>
+      <a class="btn" href="details.php?id=<?= (int)$row['id'] ?>">View Details</a>
+    </div>
+  <?php endwhile; ?>
+</div>
 
-            </p>
-            <a class="btn" href="details.php?id=<?= (int)$row['id'] ?>">View Details</a>
-          </div>
-        <?php endwhile; ?>
-      </div>
     <?php endif; ?>
   </div>
 </body>
