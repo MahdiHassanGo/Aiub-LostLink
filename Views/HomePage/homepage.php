@@ -50,7 +50,7 @@ $user = $_SESSION['user']; // array from DB: username, email, role, etc.
     <div class="container nav-inner">
       <div class="brand">Lost & Found</div>
       <div class="nav-links">
-        <a href="home.php">Home</a>
+        <a href="./homepage.php">Home</a>
         <a href="../controllers/logout.php">Logout</a>
       </div>
     </div>
@@ -71,8 +71,8 @@ $user = $_SESSION['user']; // array from DB: username, email, role, etc.
         <h3 class="title">Create a Post</h3>
         <p class="muted">Post lost/found items with title, location, phone, category and description.</p>
         <div class="actions">
-          <a class="btn" href="createPost.php">New Post</a>
-          <a class="btn ghost" href="myPosts.php">My Posts</a>
+          <a class="btn" href="../Post/create.php">New Post</a>
+         
         </div>
       </div>
 
@@ -80,8 +80,8 @@ $user = $_SESSION['user']; // array from DB: username, email, role, etc.
         <h3 class="title">Browse Posts</h3>
         <p class="muted">See all lost/found posts posted by others.</p>
         <div class="actions">
-          <a class="btn" href="allPosts.php">View All</a>
-          <a class="btn ghost" href="search.php">Search</a>
+          <a class="btn" href="../Post/index.php">View All</a>
+        
         </div>
       </div>
 
