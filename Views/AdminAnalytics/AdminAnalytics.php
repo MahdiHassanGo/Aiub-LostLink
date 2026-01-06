@@ -11,77 +11,21 @@ function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Admin Analytics</title>
   <style>
-    *{
-      box-sizing:border-box
-    }
-    body{
-      margin:0;
-      font-family:Arial,Helvetica,sans-serif;
-      background:#f4f6fb;
-      color:#111
-    }
-    .top{
-      background:#0f172a;
-      color:#fff;
-      padding:14px 0;
-      position:relative}
-    .wrap{
-      width:1100px;
-      max-width:94vw;
-      margin:0 auto
-    }
-    h1{
-      margin:0;
-      font-size:20px}
-      
-    .sub{
-      font-size:12px;
-      color:#cbd5e1;
-      margin-top:4px
-    }
-    .back{position:absolute;
-      top:18px;
-      right:24px;
-      font-size:14px
-    }
-    .back a{
-      color:#38bdf8;
-      text-decoration:none
-    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;color:#111}
+    .top{background:#0f172a;color:#fff;padding:14px 0;position:relative}
+    .wrap{width:1100px;max-width:94vw;margin:0 auto}
+    h1{margin:0;font-size:20px}
+    .sub{font-size:12px;color:#cbd5e1;margin-top:4px}
+    .back{position:absolute;top:18px;right:24px;font-size:14px}
+    .back a{color:#38bdf8;text-decoration:none}
+    .back a:hover{text-decoration:underline}
 
-    .back a:hover{
-      text-decoration:underline
-    }
-
-    .card{
-      background:#fff;
-      border:1px solid #e5e7eb;
-      border-radius:14px;
-      box-shadow:0 8px 22px rgba(15,23,42,.06);
-      padding:16px;margin:18px 0
-    }
-    table{
-      width:100%;
-      border-collapse:collapse
-    }
-    th,td{
-      padding:10px 12px;
-      border-bottom:1px solid #eef2f7;
-      text-align:left
-    }
-    th{
-      font-size:13px;
-      color:#334155;
-      background:#f8fafc
-    }
-    .badge{
-      display:inline-block;
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:12px;
-      border:1px solid #e2e8f0;
-      background:#f8fafc;
-    }
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 8px 22px rgba(15,23,42,.06);padding:16px;margin:18px 0}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 12px;border-bottom:1px solid #eef2f7;text-align:left}
+    th{font-size:13px;color:#334155;background:#f8fafc}
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid #e2e8f0;background:#f8fafc}
   </style>
 </head>
 <body>
