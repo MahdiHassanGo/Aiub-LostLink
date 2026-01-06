@@ -1,5 +1,7 @@
 <?php
-require_once('../sessionCheck.php');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+require_once('../../controllers/sessionCheck.php');
 require_once('../../models/postModel.php');
 
 $id = intval($_GET['id'] ?? 0);
@@ -14,7 +16,7 @@ if ($post) {
         $post['category']
     );
 }
-
+//new 
 
 $msg = $_GET['msg'] ?? '';
 $err = $_GET['err'] ?? '';
@@ -115,6 +117,9 @@ $err = $_GET['err'] ?? '';
     <?php endif; ?>
     <?php if ($suggestions && mysqli_num_rows($suggestions) > 0): ?>
   <div class="card">
+
+  <!-- Smart feature -->
+
     <h3 style="margin:0 0 12px;">🔍 Similar <?= htmlspecialchars($post['category']) ?> Items</h3>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">

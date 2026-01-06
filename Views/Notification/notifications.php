@@ -8,7 +8,6 @@
   <style>
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;color:#111}
-
     .nav{background:#0f172a;padding:14px 0;color:#fff}
     .container{width:1050px;max-width:1050px;margin:0 auto;padding:0 16px}
     .nav-inner{display:flex;align-items:center;justify-content:space-between}
@@ -18,12 +17,10 @@
       padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.10)
     }
     .nav-links a:hover{background:rgba(255,255,255,.16)}
-
     .page{padding:22px 0}
     .header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
     h1{margin:0 0 6px;font-size:22px}
     .sub{margin:0;color:#444;font-size:14px}
-
     .actions{display:flex;gap:10px;flex-wrap:wrap}
     .btn{
       border:0;cursor:pointer;
@@ -32,7 +29,6 @@
       font-size:14px;
     }
     .btn.secondary{background:#e5e7eb;color:#111}
-
     .list{margin-top:16px}
     .note{
       background:#fff;border:1px solid #e5e7eb;border-radius:14px;
@@ -43,7 +39,6 @@
     .note-title{margin:0 0 6px;font-size:15px}
     .note-body{margin:0 0 8px;color:#444;font-size:14px;line-height:1.35}
     .note-meta{font-size:12px;color:#666}
-
     .note-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:140px}
     .small-btn{
       border:0;cursor:pointer;
@@ -51,7 +46,6 @@
       background:#0f172a;color:#fff;font-size:13px;
     }
     .small-btn.secondary{background:#e5e7eb;color:#111;text-decoration:none;display:inline-block}
-
     .empty{
       background:#fff;border:1px solid #e5e7eb;border-radius:14px;
       padding:18px;color:#444;margin-top:16px;

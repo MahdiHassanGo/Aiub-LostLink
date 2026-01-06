@@ -1,5 +1,7 @@
 <?php
-require_once('../sessionCheck.php');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+require_once( '../../controllers/sessionCheck.php');
 require_once('../../models/postModel.php');
 $isAdmin = strtolower($_SESSION['user']['role'] ?? '') === 'admin';
 $search = $_GET['search'] ?? null;
@@ -62,6 +64,8 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
 <?php if ($isAdmin): ?>
   <a href="../AdminUserManagement/Admin-User-mgt.php">AdminUserManagement</a>
     <a href="../AdminAnalytics/AdminAnalytics.php">AdminAnalytics</a>
+    <a href="../AdminPostReview/AdminPostReview.php">Admin Post Review</a>
+
 <?php endif; ?>
         <a href="../../Controllers/notificationsCheck.php">Notifications</a>
         <a href="../../controllers/logout.php">Logout</a>
@@ -95,19 +99,26 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
 
 </div>
       <div class="grid">
-        
-        <?php while($row = mysqli_fetch_assoc($result)): ?>
-          <div class="card">
-            <div class="tag"><?= htmlspecialchars($row['category']) ?></div>
-            <h3 class="title"><?= htmlspecialchars($row['title']) ?></h3>
-            <p class="meta">
-              <b>Location:</b> <?= htmlspecialchars($row['location']) ?><br>
-              <b>Posted:</b> <?= htmlspecialchars($row['created_at']) ?>
-            </p>
-            <a class="btn" href="details.php?id=<?= (int)$row['id'] ?>">View Details</a>
-          </div>
-        <?php endwhile; ?>
-      </div>
+  <?php while($row = mysqli_fetch_assoc($result)): ?>
+    <?php
+      // show ONLY approved
+      if (strtolower($row['status'] ?? '') !== 'approved') {
+        continue;
+      }
+    ?>
+    <div class="card">
+      <div class="tag"><?= htmlspecialchars($row['category']) ?></div>
+      <h3 class="title"><?= htmlspecialchars($row['title']) ?></h3>
+      <p class="meta">
+        <b>Location:</b> <?= htmlspecialchars($row['location']) ?><br>
+        <b>Posted:</b> <?= htmlspecialchars($row['created_at']) ?><br>
+        <b>Posted by:</b> <?= htmlspecialchars($row['posted_by_username'] ?? 'Unknown') ?><br>
+      </p>
+      <a class="btn" href="details.php?id=<?= (int)$row['id'] ?>">View Details</a>
+    </div>
+  <?php endwhile; ?>
+</div>
+
     <?php endif; ?>
   </div>
 </body>
