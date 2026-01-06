@@ -29,15 +29,19 @@
         }
 
         legend{
-            width:100%;
-            text-align:center;
-            font-size:30px;
-            font-weight:700;
-            color:#3a1695;
-            padding:0 10px 10px;
-        }
+    float:left;                 
+    width:100%;
+    text-align:center;
+    font-size:30px;
+    font-weight:700;
+    color:#3a1695;
+    padding:0;                 
+    margin:0 0 14px;          
+    line-height:1.2;
+}
 
-        table{width:100%; border-collapse:collapse;}
+
+        table{width:100%; border-collapse:collapse;clear:both;}
         td{padding:8px 0; vertical-align:middle;}
 
         .line{
