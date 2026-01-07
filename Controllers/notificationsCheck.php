@@ -3,14 +3,14 @@ session_start();
 require_once(__DIR__ . '/../Models/notificationModel.php');
 
 if (!isset($_COOKIE['status']) || $_COOKIE['status'] !== 'true' || !isset($_SESSION['user'])) {
-  header('Location: ../Views/Login/login.php');
+  header('Location: /WebTechnology-Project/Views/Login/login.php');
   exit;
 }
 
 $userId = getUserIdFromSession();
 
 if ($userId <= 0) {
-  header('Location: ../Views/Login/login.php');
+  header('Location: /WebTechnology-Project/Views/Login/login.php');
   exit;
 }
 
@@ -28,13 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id > 0) markNotificationRead($id, $userId);
   }
 
-  if (isset($_POST['ajax']) && $_POST['ajax'] === '1') {
-    header('Content-Type: application/json');
-    echo json_encode(['ok' => true]);
-    exit;
-  }
-
-  header("Location: /WebTechnology-Project/Controllers/notificationsCheck.php");
+  header('Location: /WebTechnology-Project/Controllers/notificationsCheck.php');
   exit;
 }
 

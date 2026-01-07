@@ -5,7 +5,6 @@ require_once(__DIR__ . '/../models/db.php');
 
 $BASE = '/WebTechnology-Project';
 
-// Admin-only access
 $role = strtolower(trim($_SESSION['user']['role'] ?? ''));
 if ($role !== 'admin') {
   header("Location: $BASE/views/Post/index.php?msg=unauthorized");

@@ -1,18 +1,10 @@
 <?php
-session_start();
-
-// ✅ Error show (development only)
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once(__DIR__ . '/../models/userModel.php');
-
-// ✅ notification model (case-safe + optional)
-$notifPath = __DIR__ . '/../models/notificationModel.php';
-if (file_exists($notifPath)) {
-  require_once($notifPath);
-}
+session_start();
+require_once('../models/userModel.php');
+require_once('../models/notificationModel.php');
 
 if (!isset($_POST['submit'])) {
   header('Location: ../views/Login/login.php');
@@ -30,6 +22,7 @@ if ($email === '' || $password === '') {
 $user = login($email, $password);
 
 if ($user) {
+ 
   $_SESSION['user'] = [
     'id' => $user['id'],
     'username' => $user['username'],
@@ -39,18 +32,10 @@ if ($user) {
 
   setcookie('status', 'true', time() + 3600, '/');
 
-  // ✅ notification function থাকলে call হবে
-  if (function_exists('addNotification')) {
-    addNotification(
-      $_SESSION['user']['id'],
-      'info',
-      'Login successful',
-      'You just logged in.',
-      '/WebTechnology-Project/views/HomePage/homepage.php'
-    );
-  }
+ 
+  addNotification($_SESSION['user']['id'], 'info', 'Login successful', 'You just logged in.', '/WebTechnology-Project/views/HomePage/homepage.php');
 
-  // ✅ Only ONE redirect
+  header('Location: /WebTechnology-Project/views/Post/index.php');
   header('Location: ../views/Post/index.php');
   exit;
 }

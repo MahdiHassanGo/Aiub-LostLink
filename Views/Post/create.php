@@ -1,5 +1,5 @@
 <?php
-require_once('../sessionCheck.php');
+require_once( '../../controllers/sessionCheck.php');
 $err = $_GET['err'] ?? '';
 ?>
 <!DOCTYPE html>

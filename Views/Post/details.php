@@ -1,6 +1,10 @@
 <?php
-require_once('../sessionCheck.php');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+require_once('../../controllers/sessionCheck.php');
 require_once('../../models/postModel.php');
+require_once('../../models/commentModel.php');
+
 
 $id = intval($_GET['id'] ?? 0);
 $post = ($id > 0) ? getPostById($id) : false;
@@ -14,13 +18,19 @@ if ($post) {
         $post['category']
     );
 }
-
+//new 
 
 $msg = $_GET['msg'] ?? '';
 $err = $_GET['err'] ?? '';
-?>
- 
 
+ 
+$comments = [];
+if ($post) {
+  $comments = getCommentsByPostId($post['id']);
+}
+$c_msg = $_GET['c_msg'] ?? '';
+$c_err = $_GET['c_err'] ?? '';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -112,9 +122,53 @@ $err = $_GET['err'] ?? '';
         </form>
       </div>
 
+          <div class="card">
+  <h3 style="margin:0 0 10px;">Comments</h3>
+
+  <?php if ($c_msg === '1'): ?>
+    <div class="msg">Comment posted ✅</div>
+  <?php endif; ?>
+
+  <?php if ($c_err === '1'): ?>
+    <div class="err">Comment cannot be empty.</div>
+  <?php endif; ?>
+
+  <form method="post" action="../../controllers/commentCheck.php">
+    <input type="hidden" name="post_id" value="<?= (int)$post['id'] ?>">
+
+    <label>Write a comment</label>
+    <textarea name="comment" required placeholder="Write your comment..."></textarea>
+
+    <button class="btn" type="submit" name="submit">Post Comment</button>
+  </form>
+
+<!--comment-->  
+  <div style="margin-top:14px;">
+    <?php if (!isset($comments) || count($comments) === 0): ?>
+      <div class="empty">No comments yet.</div>
+    <?php else: ?>
+      <?php foreach ($comments as $c): ?>
+        <div style="border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin-bottom:10px;background:#fff;">
+          <div style="font-size:13px;color:#444;margin-bottom:6px;">
+            <b><?= htmlspecialchars($c['username']) ?></b>
+            • <?= htmlspecialchars($c['created_at']) ?>
+          </div>
+          <div style="white-space:pre-wrap;line-height:1.5;">
+            <?= htmlspecialchars($c['comment']) ?>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    <?php endif; ?>
+  </div>
+</div>
+
+
     <?php endif; ?>
     <?php if ($suggestions && mysqli_num_rows($suggestions) > 0): ?>
   <div class="card">
+
+  <!-- Smart feature -->
+
     <h3 style="margin:0 0 12px;">🔍 Similar <?= htmlspecialchars($post['category']) ?> Items</h3>
 
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;">

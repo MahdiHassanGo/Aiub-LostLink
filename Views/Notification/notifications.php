@@ -8,7 +8,6 @@
   <style>
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;color:#111}
-
     .nav{background:#0f172a;padding:14px 0;color:#fff}
     .container{width:1050px;max-width:1050px;margin:0 auto;padding:0 16px}
     .nav-inner{display:flex;align-items:center;justify-content:space-between}
@@ -18,12 +17,10 @@
       padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.10)
     }
     .nav-links a:hover{background:rgba(255,255,255,.16)}
-
     .page{padding:22px 0}
     .header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
     h1{margin:0 0 6px;font-size:22px}
     .sub{margin:0;color:#444;font-size:14px}
-
     .actions{display:flex;gap:10px;flex-wrap:wrap}
     .btn{
       border:0;cursor:pointer;
@@ -32,7 +29,6 @@
       font-size:14px;
     }
     .btn.secondary{background:#e5e7eb;color:#111}
-
     .list{margin-top:16px}
     .note{
       background:#fff;border:1px solid #e5e7eb;border-radius:14px;
@@ -43,7 +39,6 @@
     .note-title{margin:0 0 6px;font-size:15px}
     .note-body{margin:0 0 8px;color:#444;font-size:14px;line-height:1.35}
     .note-meta{font-size:12px;color:#666}
-
     .note-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:140px}
     .small-btn{
       border:0;cursor:pointer;
@@ -51,7 +46,6 @@
       background:#0f172a;color:#fff;font-size:13px;
     }
     .small-btn.secondary{background:#e5e7eb;color:#111;text-decoration:none;display:inline-block}
-
     .empty{
       background:#fff;border:1px solid #e5e7eb;border-radius:14px;
       padding:18px;color:#444;margin-top:16px;
@@ -66,7 +60,7 @@
         <div class="brand">AIUB LostLink</div>
         <div class="nav-links">
           <a href="/WebTechnology-Project/Controllers/logout.php">Logout</a>
-          <a href="/WebTechnology-Project/views/HomePage/homepage.php">Home</a>
+          <a href="/WebTechnology-Project/Views/HomePage/homepage.php">Home</a>
         </div>
       </div>
     </div>
@@ -81,12 +75,12 @@
         </div>
 
         <div class="actions">
-          <form method="post" action="../../Controllers/notificationsCheck.php" class="notifForm" style="display:inline;">
+          <form method="post" action="/WebTechnology-Project/Controllers/notificationsCheck.php" style="display:inline;">
             <input type="hidden" name="action" value="mark_all_read">
             <button class="btn" type="submit">Mark all as read</button>
           </form>
 
-          <form method="post" action="../../Controllers/notificationsCheck.php" class="notifForm" style="display:inline;">
+          <form method="post" action="/WebTechnology-Project/Controllers/notificationsCheck.php" style="display:inline;">
             <input type="hidden" name="action" value="clear_all">
             <button class="btn secondary" type="submit">Clear all</button>
           </form>
@@ -127,7 +121,7 @@
 
               <div class="note-right">
                 <?php if ($isUnread): ?>
-                  <form method="post" action="../../Controllers/notificationsCheck.php" class="notifForm" style="display:inline;">
+                  <form method="post" action="/WebTechnology-Project/Controllers/notificationsCheck.php" style="display:inline;">
                     <input type="hidden" name="action" value="mark_read">
                     <input type="hidden" name="id" value="<?= (int)($n['id'] ?? 0) ?>">
                     <button class="small-btn" type="submit">Mark read</button>
@@ -145,23 +139,5 @@
 
     </div>
   </div>
-
-  <script>
-    var forms = document.getElementsByClassName('notifForm');
-
-    for (var i = 0; i < forms.length; i++) {
-      forms[i].addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        var form = this;
-        var data = new FormData(form);
-        data.append('ajax', '1');
-
-        fetch(form.action, { method: 'POST', body: data })
-          .then(function (res) { return res.json(); })
-          .then(function () { window.location.reload(); });
-      });
-    }
-  </script>
 </body>
 </html>

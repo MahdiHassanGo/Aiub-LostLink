@@ -1,6 +1,6 @@
 <?php
 function getConnection() {
-  $con = mysqli_connect('127.0.0.1', 'root', '', 'AIUBLostLink');
+  $con = mysqli_connect('127.0.0.1', 'root', '', 'AiubLostLink');
   if (!$con) {
     die("DB Connection failed: " . mysqli_connect_error());
   }
