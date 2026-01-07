@@ -1,39 +1,32 @@
 <?php
 require_once(__DIR__ . '/db.php');
 
-function getUserIdFromSession() {
-  if (isset($_SESSION['user']) && isset($_SESSION['user']['id'])) {
-    return (int)$_SESSION['user']['id'];
-  }
-  if (isset($_SESSION['user_id'])) {
-    return (int)$_SESSION['user_id'];
-  }
-  return 0;
-}
-
-function getUserById($userId) {
-  $con = getConnection();
-  $userId = (int)$userId;
-  $sql = "SELECT id, username, email FROM users WHERE id = $userId LIMIT 1";
-  $result = mysqli_query($con, $sql);
-  if ($result) {
-    $row = mysqli_fetch_assoc($result);
-    if ($row) return $row;
-  }
-  return null;
-}
-
 function createMessage($senderId, $receiverId, $body) {
   $con = getConnection();
   $senderId = (int)$senderId;
   $receiverId = (int)$receiverId;
   $body = trim((string)$body);
+
   if ($senderId <= 0 || $receiverId <= 0 || $body === '') return false;
+
   $body = mysqli_real_escape_string($con, $body);
 
   $sql = "INSERT INTO messages (sender_id, receiver_id, body, is_read)
           VALUES ($senderId, $receiverId, '$body', 0)";
   return mysqli_query($con, $sql);
+}
+
+function getUserById($id) {
+  $con = getConnection();
+  $id = (int)$id;
+
+  $sql = "SELECT id, username, email FROM users WHERE id=$id LIMIT 1";
+  $res = mysqli_query($con, $sql);
+  if ($res) {
+    $row = mysqli_fetch_assoc($res);
+    if ($row) return $row;
+  }
+  return null;
 }
 
 function getInboxChats($userId) {
@@ -91,9 +84,7 @@ function getThreadMessages($userId, $otherId) {
   $list = [];
 
   if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-      $list[] = $row;
-    }
+    while ($row = mysqli_fetch_assoc($result)) $list[] = $row;
   }
 
   return $list;
@@ -103,7 +94,9 @@ function markThreadRead($userId, $otherId) {
   $con = getConnection();
   $userId = (int)$userId;
   $otherId = (int)$otherId;
-  $sql = "UPDATE messages SET is_read = 1
+
+  $sql = "UPDATE messages
+          SET is_read = 1
           WHERE receiver_id = $userId AND sender_id = $otherId";
   return mysqli_query($con, $sql);
 }
