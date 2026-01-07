@@ -44,7 +44,7 @@
       text-align:center;
       font-size:13px;
       color:#5a5a5a;
-      margin-bottom:18px;
+      margin-bottom:12px;
     }
 
     table{width:100%; border-collapse:collapse; clear:both;}
@@ -101,6 +101,25 @@
     a{color:#6b2cff; text-decoration:none;}
     a:hover{text-decoration:underline;}
 
+    .err{
+      clear:both;
+      display:none;
+      margin:0 0 12px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#fee2e2;
+      border:1px solid #fecaca;
+      color:#991b1b;
+      font-size:13px;
+    }
+
+    .hint{
+      font-size:12px;
+      color:#666;
+      margin-top:6px;
+      line-height:1.35;
+    }
+
     @media (max-width:420px){
       fieldset{padding:28px 22px 22px}
       legend{font-size:28px}
@@ -110,11 +129,13 @@
 
 <body>
 
-  <!-- ✅ major code unchanged: method, action, names -->
-  <form method="post" action="../../Controllers/signupCheck.php">
+  <!-- ✅ major code unchanged: method, action, existing names -->
+  <form id="signupForm" method="post" action="../../Controllers/signupCheck.php">
     <fieldset>
       <legend>Sign up</legend>
       <div class="sub">Create your account to post Lost & Found items.</div>
+
+      <div id="errBox" class="err"></div>
 
       <table>
         <tr class="line">
@@ -146,7 +167,30 @@
             </svg>
           </td>
           <td>
-            <input type="password" name="password" required placeholder="Create a password">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              required
+              placeholder="Create a password"
+              minlength="8"
+              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$"
+              title="Password must be at least 8 characters and include 1 letter, 1 number, and 1 special character."
+            >
+            <div class="hint">
+              Must be 8+ chars and include <b>letter</b>, <b>number</b> & <b>special</b> character.
+            </div>
+          </td>
+        </tr>
+
+        <tr class="line">
+          <td class="ico">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M17 9h-1V7a4 4 0 0 0-8 0v2H7a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2Zm-7-2a2 2 0 0 1 4 0v2h-4Z"/>
+            </svg>
+          </td>
+          <td>
+            <input type="password" name="confirm_password" id="confirm_password" required placeholder="Confirm password">
           </td>
         </tr>
 
@@ -165,6 +209,43 @@
 
     </fieldset>
   </form>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    const pw = document.getElementById('password');
+    const cpw = document.getElementById('confirm_password');
+    const errBox = document.getElementById('errBox');
+
+    function showErr(msg){
+      errBox.textContent = msg;
+      errBox.style.display = 'block';
+    }
+    function clearErr(){
+      errBox.textContent = '';
+      errBox.style.display = 'none';
+    }
+
+    form.addEventListener('submit', function(e){
+      clearErr();
+
+      const password = pw.value;
+      const strong = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
+
+      if (!strong.test(password)) {
+        e.preventDefault();
+        showErr('Password must be 8+ characters and include at least 1 letter, 1 number, and 1 special character.');
+        pw.focus();
+        return;
+      }
+
+      if (password !== cpw.value) {
+        e.preventDefault();
+        showErr('Confirm Password does not match.');
+        cpw.focus();
+        return;
+      }
+    });
+  </script>
 
 </body>
 </html>
