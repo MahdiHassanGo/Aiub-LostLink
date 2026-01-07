@@ -14,8 +14,6 @@ if (!isset($_POST['submit'])) {
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
-$user = login($email, $password);
-
 if ($email === '' || $password === '') {
   header('Location: ../views/Login/login.php?msg=empty');
   exit;
@@ -42,5 +40,5 @@ if ($user) {
   exit;
 }
 
-header('Location: /WebTechnology-Project/views/Login/login.php?msg=invalid');
+header('Location: ../views/Login/login.php?msg=invalid');
 exit;

@@ -16,113 +16,131 @@ $err = $_GET['err'] ?? '';
       font-family: Arial, Helvetica, sans-serif;
       min-height:100vh;
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:center;
+      padding:36px 0;
       background: linear-gradient(135deg, #5d22ff 0%, #3c0fb0 45%, #240064 100%);
+      color:#111;
     }
 
-    form{width:520px; max-width:92vw;} /* a bit wider for post form */
+    /* container */
+    .wrap{
+      width:820px;
+      max-width:92vw;
+    }
 
-    fieldset{
-      border:0;
+    /* top bar (styled like a small header chip) */
+    .top{
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      color:#fff;
+      padding:12px 14px;
+      border-radius:12px;
+      box-shadow: 0 12px 28px rgba(0,0,0,.22);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .top-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      font-weight:800;
+      letter-spacing:.2px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      font-size:15px;
+    }
+
+    .links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      font-size:13px;
+    }
+
+    a{color:#e9d5ff; text-decoration:none;}
+    a:hover{text-decoration:underline}
+
+    /* main card like login/signup */
+    .card{
+      margin-top:18px;
       background:#ffffff;
-      padding:32px 34px 26px;
       border-radius:12px;
       box-shadow: 0 18px 45px rgba(0,0,0,.28);
+      padding:26px 28px 22px;
     }
 
-    legend{
-      float:left;
-      width:100%;
-      text-align:center;
-      font-size:30px;
-      font-weight:700;
+    .title{
+      font-size:26px;
+      font-weight:900;
       color:#3a1695;
-      padding:0;
-      margin:0 0 14px;
-      line-height:1.2;
+      text-align:center;
+      margin:0 0 6px;
     }
 
     .sub{
-      clear:both;
       text-align:center;
       font-size:13px;
-      color:#555;
+      color:#666;
+      margin:0 0 18px;
+    }
+
+    .err{
       margin:0 0 14px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#fee2e2;
+      border:1px solid #fecaca;
+      color:#991b1b;
+      font-size:13px;
     }
 
-    table{width:100%; border-collapse:collapse; clear:both;}
-    td{padding:8px 0; vertical-align:middle;}
-
-    .line{
-      border-bottom:1px solid rgba(0,0,0,.35);
+    label{
+      display:block;
+      margin:12px 0 6px;
+      font-size:13px;
+      color:#333;
+      font-weight:700;
     }
 
-    .ico{
-      width:30px;
-      padding-right:10px;
-      opacity:.65;
-    }
-    .ico svg{display:block; width:18px; height:18px; fill:#1a1a1a;}
-
-    input[type="text"], select, textarea{
+    input, select, textarea{
       width:100%;
-      border:0;
+      padding:11px 12px;
+      border:1px solid rgba(0,0,0,.25);
+      border-radius:10px;
       outline:none;
-      background:transparent;
-      padding:10px 0;
       font-size:14px;
-      color:#111;
-      font-family: Arial, Helvetica, sans-serif;
+      background:#fff;
     }
 
-    input::placeholder, textarea::placeholder{
-      color:rgba(0,0,0,.45);
-    }
+    textarea{min-height:130px; resize:vertical;}
 
-    textarea{
-      resize:vertical;
-      min-height:110px;
-      line-height:1.35;
-    }
-
-    tr.line:focus-within{
-      border-bottom-color:#6b2cff;
+    input:focus, select:focus, textarea:focus{
+      border-color:#6b2cff;
       box-shadow: 0 10px 18px -16px rgba(107,44,255,.75);
     }
 
-    /* dropdown look */
-    select{
-      appearance:none;
-      -webkit-appearance:none;
-      -moz-appearance:none;
-      cursor:pointer;
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
     }
-
-    .hintRow{
-      padding-top:10px;
-      font-size:12px;
-      color:#555;
-    }
-
-    .navLinks{
-      display:flex;
-      gap:10px;
-      justify-content:space-between;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-
-    a{color:#6b2cff; text-decoration:none;}
-    a:hover{text-decoration:underline;}
 
     .btn{
       width:100%;
+      margin-top:16px;
       padding:11px 12px;
       border:0;
       border-radius:8px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       letter-spacing:.2px;
       color:#fff;
       background: linear-gradient(90deg, #1b103a 0%, #0e0a1e 100%);
@@ -130,30 +148,31 @@ $err = $_GET['err'] ?? '';
     }
     .btn:hover{filter:brightness(1.08);}
 
-    .err{
-      clear:both;
-      padding:10px 12px;
-      border-radius:10px;
-      background:#fee2e2;
-      border:1px solid #fecaca;
-      color:#991b1b;
-      margin:0 0 12px;
-      font-size:13px;
-    }
-
-    @media (max-width:520px){
-      fieldset{padding:28px 22px 22px}
-      legend{font-size:28px}
+    @media (max-width:700px){
+      body{padding:22px 0}
+      .card{padding:22px 20px}
+      .grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <div class="top">
+      <div class="top-inner">
+        <div class="brand">AIUB LostLink <span style="opacity:.8;">•</span> Create Post</div>
+        <div class="links">
+          <a href="index.php">All Posts</a> |
+          <a href="index.php?category=Lost">Lost</a> |
+          <a href="index.php?category=Found">Found</a> |
+          <a href="../../controllers/logout.php">Logout</a>
+        </div>
+      </div>
+    </div>
 
-  <form method="post" action="../../controllers/postCreateCheck.php">
-    <fieldset>
-      <legend>Create Post</legend>
-      <p class="sub">Submit your Lost/Found post with proper details.</p>
+    <div class="card">
+      <h1 class="title">Create Post</h1>
+      <p class="sub">Share details so others can help find or claim the item.</p>
 
       <?php if ($err === '1'): ?>
         <div class="err">Please fill all fields correctly.</div>
@@ -231,27 +250,17 @@ $err = $_GET['err'] ?? '';
           </td>
         </tr>
 
-        <tr class="hintRow">
-          <td colspan="2">
-            <div class="navLinks">
-              <div>
-                <a href="index.php">← Back to Posts</a> |
-                <a href="index.php?category=Lost">Lost</a> |
-                <a href="index.php?category=Found">Found</a>
-              </div>
-              <div>
-                <a href="../../controllers/logout.php">Logout</a>
-              </div>
-            </div>
-          </td>
-        </tr>
+        <div class="grid">
+          <div>
+            <label>Phone</label>
+            <input type="text" name="phone" required placeholder="e.g., 01711-111111">
+          </div>
 
-        <tr>
-          <td colspan="2">
-            <input class="btn" type="submit" name="submit" value="Post">
-          </td>
-        </tr>
-      </table>
+          <div>
+            <label>Student ID</label>
+            <input type="text" name="student_id" required placeholder="e.g., 22-12345-1">
+          </div>
+        </div>
 
     </fieldset>
   </form>

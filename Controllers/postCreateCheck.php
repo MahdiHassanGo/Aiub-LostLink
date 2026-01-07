@@ -4,8 +4,9 @@ error_reporting(E_ALL);
 
 
 session_start();
-require_once(__DIR__ . '/../models/postModel.php');
-require_once(__DIR__ . '/../models/notificationModel.php');
+require_once('../Models/notificationModel.php');
+require_once('../Models/postModel.php');
+
 
 if (!isset($_COOKIE['status']) || !isset($_SESSION['user'])) {
   header('Location: ../views/Login/login.php');

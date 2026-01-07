@@ -1,6 +1,10 @@
 <?php
 require_once(__DIR__ . '/db.php');
 
+/* =========================
+   User Register & Login
+   ========================= */
+
 function addUser($user) {
   $con = getConnection();
 
@@ -11,13 +15,14 @@ function addUser($user) {
   if ($username === '' || $email === '' || $pass === '') return false;
 
   // Check duplicate email
-  $checkSql = "SELECT id FROM users WHERE email=? LIMIT 1";
+  $checkSql  = "SELECT id FROM users WHERE email=? LIMIT 1";
   $checkStmt = mysqli_prepare($con, $checkSql);
   if (!$checkStmt) return false;
 
   mysqli_stmt_bind_param($checkStmt, "s", $email);
   mysqli_stmt_execute($checkStmt);
   $checkRes = mysqli_stmt_get_result($checkStmt);
+
   if ($checkRes && mysqli_fetch_assoc($checkRes)) {
     return false; // email already exists
   }
@@ -25,7 +30,7 @@ function addUser($user) {
   $hash = password_hash($pass, PASSWORD_DEFAULT);
 
   // Insert new user (default role User)
-  $sql = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, 'User')";
+  $sql  = "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, 'User')";
   $stmt = mysqli_prepare($con, $sql);
   if (!$stmt) return false;
 
@@ -33,11 +38,10 @@ function addUser($user) {
   return mysqli_stmt_execute($stmt);
 }
 
-
 function login($email, $password) {
   $con = getConnection();
 
-  $sql = "SELECT * FROM users WHERE email=? LIMIT 1";
+  $sql  = "SELECT * FROM users WHERE email=? LIMIT 1";
   $stmt = mysqli_prepare($con, $sql);
   if (!$stmt) return false;
 
@@ -53,8 +57,36 @@ function login($email, $password) {
   return false;
 }
 
+/* =========================
+   Forgot Password Helpers
+   ========================= */
 
+function getUserByEmail($email){
+  $con = getConnection();
 
+  $sql  = "SELECT * FROM users WHERE email=? LIMIT 1";
+  $stmt = mysqli_prepare($con, $sql);
+  if (!$stmt) return false;
+
+  mysqli_stmt_bind_param($stmt, "s", $email);
+  mysqli_stmt_execute($stmt);
+
+  $res = mysqli_stmt_get_result($stmt);
+  return mysqli_fetch_assoc($res);
+}
+
+function updatePasswordByEmail($email, $newPlainPassword){
+  $con = getConnection();
+  $hash = password_hash($newPlainPassword, PASSWORD_DEFAULT);
+
+  // ✅ DB column is password_hash
+  $sql  = "UPDATE users SET password_hash=? WHERE email=?";
+  $stmt = mysqli_prepare($con, $sql);
+  if (!$stmt) return false;
+
+  mysqli_stmt_bind_param($stmt, "ss", $hash, $email);
+  return mysqli_stmt_execute($stmt);
+}
 
 /* =========================
    Admin User Management
@@ -63,7 +95,6 @@ function login($email, $password) {
 function getAllUsers() {
   $con = getConnection();
 
-  // assumes primary key column name is `id`
   $sql = "SELECT id, username, email, role FROM users ORDER BY id DESC";
   $result = mysqli_query($con, $sql);
 
@@ -82,7 +113,7 @@ function updateUserRole($userId, $newRole) {
 
   $con = getConnection();
 
-  $sql = "UPDATE users SET role=? WHERE id=?";
+  $sql  = "UPDATE users SET role=? WHERE id=?";
   $stmt = mysqli_prepare($con, $sql);
   if (!$stmt) return false;
 
