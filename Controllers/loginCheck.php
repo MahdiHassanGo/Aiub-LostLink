@@ -1,7 +1,18 @@
 <?php
 session_start();
-require_once('../models/userModel.php');
-require_once('../Models/notificationModel.php');
+
+// ✅ Error show (development only)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require_once(__DIR__ . '/../models/userModel.php');
+
+// ✅ notification model (case-safe + optional)
+$notifPath = __DIR__ . '/../models/notificationModel.php';
+if (file_exists($notifPath)) {
+  require_once($notifPath);
+}
 
 if (!isset($_POST['submit'])) {
   header('Location: ../views/Login/login.php');
@@ -11,8 +22,6 @@ if (!isset($_POST['submit'])) {
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
-$user = login($email, $password);
-
 if ($email === '' || $password === '') {
   header('Location: ../views/Login/login.php?msg=empty');
   exit;
@@ -21,7 +30,6 @@ if ($email === '' || $password === '') {
 $user = login($email, $password);
 
 if ($user) {
-  // Make session structure consistent (important for admin role checks)
   $_SESSION['user'] = [
     'id' => $user['id'],
     'username' => $user['username'],
@@ -31,14 +39,21 @@ if ($user) {
 
   setcookie('status', 'true', time() + 3600, '/');
 
-   //notif
+  // ✅ notification function থাকলে call হবে
+  if (function_exists('addNotification')) {
+    addNotification(
+      $_SESSION['user']['id'],
+      'info',
+      'Login successful',
+      'You just logged in.',
+      '/WebTechnology-Project/views/HomePage/homepage.php'
+    );
+  }
 
-  addNotification($_SESSION['user']['id'], 'info', 'Login successful', 'You just logged in.', '/WebTechnology-Project/views/HomePage/homepage.php');
-
-  header('Location: /WebTechnology-Project/views/Post/index.php');
+  // ✅ Only ONE redirect
   header('Location: ../views/Post/index.php');
   exit;
 }
 
-header('Location: /WebTechnology-Project/views/Login/login.php?msg=invalid');
+header('Location: ../views/Login/login.php?msg=invalid');
 exit;
