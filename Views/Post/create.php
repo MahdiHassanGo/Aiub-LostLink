@@ -180,18 +180,75 @@ $err = $_GET['err'] ?? '';
         <div class="err">Database error while saving post.</div>
       <?php endif; ?>
 
-      <form method="post" action="../../controllers/postCreateCheck.php">
-        <label>Category</label>
-        <select name="category" required>
-          <option value="Lost">Lost</option>
-          <option value="Found">Found</option>
-        </select>
+      <table>
+        <tr class="line">
+          <td class="ico">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/>
+            </svg>
+          </td>
+          <td>
+            <select name="category" required>
+              <option value="Lost">Lost</option>
+              <option value="Found">Found</option>
+            </select>
+          </td>
+        </tr>
 
-        <label>Title</label>
-        <input type="text" name="title" required placeholder="e.g., Lost Wallet (Black)">
+        <tr class="line">
+          <td class="ico">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h16v2H4V4zm0 5h16v2H4V9zm0 5h10v2H4v-2z"/>
+            </svg>
+          </td>
+          <td>
+            <input type="text" name="title" required placeholder="Title (e.g., Lost Wallet - Black)">
+          </td>
+        </tr>
 
-        <label>Location</label>
-        <input type="text" name="location" required placeholder="e.g., AIUB Campus A - Library">
+        <tr class="line">
+          <td class="ico">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/>
+            </svg>
+          </td>
+          <td>
+            <input type="text" name="location" required placeholder="Location (e.g., Campus A - Library)">
+          </td>
+        </tr>
+
+        <tr class="line">
+          <td class="ico">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6.6 10.8c1.4 2.7 3.9 5.2 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.2 1 .4 2.1.6 3.2.6.7 0 1.3.6 1.3 1.3V21c0 .7-.6 1.3-1.3 1.3C10.4 22.3 1.7 13.6 1.7 3.3 1.7 2.6 2.3 2 3 2h3.5c.7 0 1.3.6 1.3 1.3 0 1.1.2 2.2.6 3.2.1.4 0 .9-.2 1.2l-2.6 3.1z"/>
+            </svg>
+          </td>
+          <td>
+            <input type="text" name="phone" required placeholder="Phone (e.g., 01711-111111)">
+          </td>
+        </tr>
+
+        <tr class="line">
+          <td class="ico">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h8v2H8V8zm0 4h8v2H8v-2z"/>
+            </svg>
+          </td>
+          <td>
+            <input type="text" name="student_id" required placeholder="Student ID (e.g., 22-12345-1)">
+          </td>
+        </tr>
+
+        <tr class="line">
+          <td class="ico">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 4h16v2H4V4zm0 4h16v14H4V8zm2 2v10h12V10H6z"/>
+            </svg>
+          </td>
+          <td>
+            <textarea name="description" required placeholder="Write details that help identify the item..."></textarea>
+          </td>
+        </tr>
 
         <div class="grid">
           <div>
@@ -205,12 +262,8 @@ $err = $_GET['err'] ?? '';
           </div>
         </div>
 
-        <label>Description</label>
-        <textarea name="description" required placeholder="Write details that help identify the item..."></textarea>
+    </fieldset>
+  </form>
 
-        <button class="btn" type="submit" name="submit">Post</button>
-      </form>
-    </div>
-  </div>
 </body>
 </html>
