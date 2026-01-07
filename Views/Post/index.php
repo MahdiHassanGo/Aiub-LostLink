@@ -195,29 +195,29 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
 </head>
 
 <body>
-  <div class="wrap">
+  <div class="top">
+    <div class="wrap top-inner">
+      <div><b>AIUB LostLink</b> • Posts</div>
+      <div class="links">
+        <a href="create.php">+ Create Post</a>
+        <a href="index.php">All</a>
+        <a href="index.php?category=Lost">Lost</a>
+        <a href="index.php?category=Found">Found</a>
+        <a href="../ClaimRequest/ClaimReq.php">My Claims</a>
+        <a href="/WebTechnology-Project/Controllers/messagesCheck.php">Messages</a>
+        <a href="/WebTechnology-Project/controllers/myReportsCheck.php">My Reports</a>
 
-    <div class="top">
-      <div class="top-inner">
-        <div class="brand"><b>AIUB LostLink</b> <span style="opacity:.8;">•</span> Posts</div>
 
-        <div class="links">
-          <a href="create.php">+ Create Post</a>
-          <a href="index.php">All</a>
-          <a href="index.php?category=Lost">Lost</a>
-          <a href="index.php?category=Found">Found</a>
-          <a href="../ClaimRequest/ClaimReq.php">My Claims</a>
-          <a href="/WebTechnology-Project/Controllers/messagesCheck.php">Messages</a>
 
-          <?php if ($isAdmin): ?>
-            <a href="../AdminUserManagement/Admin-User-mgt.php">AdminUserManagement</a>
-            <a href="../AdminAnalytics/AdminAnalytics.php">AdminAnalytics</a>
-            <a href="../AdminPostReview/AdminPostReview.php">Admin Post Review</a>
-          <?php endif; ?>
+<?php if ($isAdmin): ?>
+  <a href="../AdminUserManagement/Admin-User-mgt.php">AdminUserManagement</a>
+    <a href="../AdminAnalytics/AdminAnalytics.php">AdminAnalytics</a>
+    <a href="../AdminPostReview/AdminPostReview.php">Admin Post Review</a>
+    <a href="/WebTechnology-Project/controllers/adminReportsCheck.php">Reports</a>
 
-          <a href="../../Controllers/notificationsCheck.php">Notifications</a>
-          <a href="../../controllers/logout.php">Logout</a>
-        </div>
+<?php endif; ?>
+        <a href="../../Controllers/notificationsCheck.php">Notifications</a>
+        <a href="../../controllers/logout.php">Logout</a>
       </div>
     </div>
 

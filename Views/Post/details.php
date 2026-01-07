@@ -56,6 +56,18 @@ $c_err = $_GET['c_err'] ?? '';
     .btn{display:inline-block;padding:10px 12px;border-radius:10px;background:#2c7be5;color:#fff;text-decoration:none;font-size:14px;font-weight:800;border:0;cursor:pointer}
     .btn:hover{background:#1a5fd0}
     .empty{background:#fff;border:1px dashed #bbb;padding:16px;border-radius:12px}
+
+    .post-card{position:relative}
+
+    .post-card{position:relative}
+.report-btn{
+  position:absolute;
+  top:16px;
+  right:16px;
+  padding:8px 10px;
+  font-size:13px;
+}
+
   </style>
 </head>
 <body>
@@ -78,7 +90,10 @@ $c_err = $_GET['c_err'] ?? '';
       <div class="empty">Post not found.</div>
     <?php else: ?>
 
-      <div class="card">
+      <div class="card post-card">
+
+      <a class="btn report-btn" href="/WebTechnology-Project/controllers/reportCheck.php?post_id=<?= (int)$post['id'] ?>">Report</a>
+
         <?php if ($msg === 'claim_sent'): ?>
           <div class="msg">Claim request sent ✅</div>
         <?php endif; ?>
