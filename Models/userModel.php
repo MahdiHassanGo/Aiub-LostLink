@@ -5,6 +5,9 @@ require_once(__DIR__ . '/db.php');
    User Register & Login
    ========================= */
 
+
+   // Role user 
+
 function addUser($user) {
   $con = getConnection();
 
