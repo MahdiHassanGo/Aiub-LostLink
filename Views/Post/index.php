@@ -61,12 +61,15 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
         <a href="index.php?category=Found">Found</a>
         <a href="../ClaimRequest/ClaimReq.php">My Claims</a>
         <a href="/WebTechnology-Project/Controllers/messagesCheck.php">Messages</a>
+        <a href="/WebTechnology-Project/controllers/myReportsCheck.php">My Reports</a>
+
 
 
 <?php if ($isAdmin): ?>
   <a href="../AdminUserManagement/Admin-User-mgt.php">AdminUserManagement</a>
     <a href="../AdminAnalytics/AdminAnalytics.php">AdminAnalytics</a>
     <a href="../AdminPostReview/AdminPostReview.php">Admin Post Review</a>
+    <a href="/WebTechnology-Project/controllers/adminReportsCheck.php">Reports</a>
 
 <?php endif; ?>
         <a href="../../Controllers/notificationsCheck.php">Notifications</a>
