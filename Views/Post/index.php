@@ -1,6 +1,10 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+require_once(__DIR__ . '/../../models/announcementModel.php');
+$announcement = getActiveAnnouncement();
+
+function esc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
 require_once('../../controllers/sessionCheck.php');
 require_once('../../models/postModel.php');
@@ -214,12 +218,20 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
     <a href="../AdminAnalytics/AdminAnalytics.php">AdminAnalytics</a>
     <a href="../AdminPostReview/AdminPostReview.php">Admin Post Review</a>
     <a href="/WebTechnology-Project/controllers/adminReportsCheck.php">Reports</a>
+<a href="../AdminAnnouncement/AdminAnnouncement.php">Announcement</a>
 
 <?php endif; ?>
         <a href="../../Controllers/notificationsCheck.php">Notifications</a>
         <a href="../../controllers/logout.php">Logout</a>
       </div>
     </div>
+<?php if ($announcement && !empty($announcement['message'])): ?>
+  <div style="margin:14px auto;width:1050px;max-width:94vw;">
+    <div style="background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:10px 12px;border-radius:12px;">
+      <b>📢 Announcement:</b> <?php echo esc($announcement['message']); ?>
+    </div>
+  </div>
+<?php endif; ?>
 
     <div class="content">
       <?php if ($msg === 'posted'): ?>
