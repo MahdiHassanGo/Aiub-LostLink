@@ -1,9 +1,14 @@
+<?php
+session_start();
+$msg = $_GET['msg'] ?? '';
+$err = $_GET['err'] ?? '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Signup</title>
+  <title>Forgot Password</title>
 
   <style>
     *{box-sizing:border-box}
@@ -17,7 +22,7 @@
       background: linear-gradient(135deg, #5d22ff 0%, #3c0fb0 45%, #240064 100%);
     }
 
-    form{width:420px; max-width:92vw;}
+    form{width:520px; max-width:92vw;}
 
     fieldset{
       border:0;
@@ -44,7 +49,7 @@
       text-align:center;
       font-size:13px;
       color:#5a5a5a;
-      margin-bottom:12px;
+      margin-bottom:18px;
     }
 
     table{width:100%; border-collapse:collapse; clear:both;}
@@ -57,9 +62,10 @@
       padding-right:10px;
       opacity:.65;
     }
+
     .ico svg{display:block; width:18px; height:18px; fill:#1a1a1a;}
 
-    input[type="text"], input[type="email"], input[type="password"]{
+    input[type="email"], input[type="password"]{
       width:100%;
       border:0;
       outline:none;
@@ -91,6 +97,27 @@
     }
     .btn:hover{filter:brightness(1.08);}
 
+    .msg{
+      clear:both;
+      margin:0 0 12px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#dcfce7;
+      border:1px solid #86efac;
+      color:#166534;
+      font-size:13px;
+    }
+    .err{
+      clear:both;
+      margin:0 0 12px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#fee2e2;
+      border:1px solid #fecaca;
+      color:#991b1b;
+      font-size:13px;
+    }
+
     .help{
       text-align:center;
       font-size:13px;
@@ -101,26 +128,7 @@
     a{color:#6b2cff; text-decoration:none;}
     a:hover{text-decoration:underline;}
 
-    .err{
-      clear:both;
-      display:none;
-      margin:0 0 12px;
-      padding:10px 12px;
-      border-radius:10px;
-      background:#fee2e2;
-      border:1px solid #fecaca;
-      color:#991b1b;
-      font-size:13px;
-    }
-
-    .hint{
-      font-size:12px;
-      color:#666;
-      margin-top:6px;
-      line-height:1.35;
-    }
-
-    @media (max-width:420px){
+    @media (max-width:520px){
       fieldset{padding:28px 22px 22px}
       legend{font-size:28px}
     }
@@ -129,30 +137,20 @@
 
 <body>
 
-  <!-- ✅ major code unchanged: method, action, existing names -->
-  <form id="signupForm" method="post" action="../../Controllers/signupCheck.php">
+  <form method="post" action="../../Controllers/forgotPasswordCheck.php">
     <fieldset>
-      <legend>Sign up</legend>
-      <div class="sub">Create your account to post Lost & Found items.</div>
+      <legend>Reset Password</legend>
 
-      <div id="errBox" class="err"></div>
+      <div class="sub">Enter your email and set a new password.</div>
+
+      <?php if($msg): ?><div class="msg"><?= htmlspecialchars($msg) ?></div><?php endif; ?>
+      <?php if($err): ?><div class="err"><?= htmlspecialchars($err) ?></div><?php endif; ?>
 
       <table>
         <tr class="line">
           <td class="ico">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 12a4.5 4.5 0 1 0-4.5-4.5A4.51 4.51 0 0 0 12 12Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
-            </svg>
-          </td>
-          <td>
-            <input type="text" name="username" required placeholder="Your name">
-          </td>
-        </tr>
-
-        <tr class="line">
-          <td class="ico">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5Z"/>
             </svg>
           </td>
           <td>
@@ -167,19 +165,7 @@
             </svg>
           </td>
           <td>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              required
-              placeholder="Create a password"
-              minlength="8"
-              pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$"
-              title="Password must be at least 8 characters and include 1 letter, 1 number, and 1 special character."
-            >
-            <div class="hint">
-              Must be 8+ chars and include <b>letter</b>, <b>number</b> & <b>special</b> character.
-            </div>
+            <input type="password" name="new_password" required placeholder="New password">
           </td>
         </tr>
 
@@ -190,62 +176,25 @@
             </svg>
           </td>
           <td>
-            <input type="password" name="confirm_password" id="confirm_password" required placeholder="Confirm password">
+            <input type="password" name="confirm_password" required placeholder="Confirm password">
           </td>
         </tr>
 
         <tr>
           <td colspan="2">
-            <input class="btn" type="submit" name="submit" value="Register">
+            <button class="btn" type="submit" name="submit">Update Password</button>
           </td>
         </tr>
 
         <tr>
           <td colspan="2" class="help">
-            Already have an account? <a href="login.php">Back to login</a>
+            <a href="login.php">← Back to Login</a>
           </td>
         </tr>
       </table>
 
     </fieldset>
   </form>
-
-  <script>
-    const form = document.getElementById('signupForm');
-    const pw = document.getElementById('password');
-    const cpw = document.getElementById('confirm_password');
-    const errBox = document.getElementById('errBox');
-
-    function showErr(msg){
-      errBox.textContent = msg;
-      errBox.style.display = 'block';
-    }
-    function clearErr(){
-      errBox.textContent = '';
-      errBox.style.display = 'none';
-    }
-
-    form.addEventListener('submit', function(e){
-      clearErr();
-
-      const password = pw.value;
-      const strong = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
-
-      if (!strong.test(password)) {
-        e.preventDefault();
-        showErr('Password must be 8+ characters and include at least 1 letter, 1 number, and 1 special character.');
-        pw.focus();
-        return;
-      }
-
-      if (password !== cpw.value) {
-        e.preventDefault();
-        showErr('Confirm Password does not match.');
-        cpw.focus();
-        return;
-      }
-    });
-  </script>
 
 </body>
 </html>

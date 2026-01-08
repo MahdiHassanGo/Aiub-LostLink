@@ -1,0 +1,23 @@
+
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;color:#111}
+    .top{background:#0f172a;color:#fff;padding:14px 0; position:relative;}
+    .wrap{width:1100px;max-width:94vw;margin:0 auto}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 8px 22px rgba(15,23,42,.06);padding:16px;margin:18px 0}
+    h1{margin:0;font-size:20px}
+    .msg{margin:12px 0;padding:10px 12px;border-radius:10px;border:1px solid #dbeafe;background:#eff6ff;color:#1e3a8a}
+    .msg.bad{border-color:#fecaca;background:#fef2f2;color:#991b1b}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px 12px;border-bottom:1px solid #eef2f7;text-align:left;vertical-align:middle}
+    th{font-size:13px;color:#334155;background:#f8fafc}
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;border:1px solid #e2e8f0;background:#f8fafc}
+    .badge.admin{border-color:#c7d2fe;background:#eef2ff}
+    .badge.moderator{border-color:#a7f3d0;background:#ecfdf5}
+    .badge.user{border-color:#e5e7eb;background:#f9fafb}
+    select{padding:8px 10px;border:1px solid #d1d5db;border-radius:10px;background:#fff}
+    button{padding:8px 12px;border:0;border-radius:10px;background:#0ea5e9;color:#fff;cursor:pointer}
+    button:disabled{opacity:.6;cursor:not-allowed}
+    .small{font-size:12px;color:#64748b}
+    .row-actions{display:flex;gap:10px;align-items:center}
+    .back{position:absolute;top:18px;right:24px;font-size:14px;}
+    .back a{color:#38bdf8;text-decoration:none}
