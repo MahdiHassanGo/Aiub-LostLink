@@ -16,12 +16,10 @@ $err = $_GET['err'] ?? '';
       font-family:Arial,Helvetica,sans-serif;
       color:#111;
       min-height:100vh;
-      /* ✅ your previous theme color */
       background: linear-gradient(135deg, #5d22ff 0%, #3c0fb0 45%, #240064 100%);
     }
 
     .top{
-      /* ✅ match old theme */
       background:#240064;
       color:#fff;
       padding:14px 0
@@ -33,7 +31,7 @@ $err = $_GET['err'] ?? '';
       align-items:center;
       justify-content:space-between;
       gap:12px;
-      flex-wrap:wrap; /* ✅ alignment on small screen */
+      flex-wrap:wrap;
     }
 
     a{color:#93c5fd;text-decoration:none}
@@ -45,7 +43,6 @@ $err = $_GET['err'] ?? '';
       border-radius:12px;
       padding:16px;
       margin:18px 0;
-      /* ✅ closer to your login page shadow */
       box-shadow: 0 18px 45px rgba(0,0,0,.28);
     }
 
@@ -59,7 +56,6 @@ $err = $_GET['err'] ?? '';
     }
     textarea{min-height:120px;resize:vertical}
 
-    /* ✅ optional small focus polish (no structure change) */
     input:focus,select:focus,textarea:focus{
       border-color:#7aa7ff;
       box-shadow:0 0 0 3px rgba(44,123,229,.15);
