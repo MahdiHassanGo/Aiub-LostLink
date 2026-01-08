@@ -218,7 +218,8 @@ if (($category === 'Lost' || $category === 'Found') && $search) {
     <a href="../AdminAnalytics/AdminAnalytics.php">AdminAnalytics</a>
     <a href="../AdminPostReview/AdminPostReview.php">Admin Post Review</a>
     <a href="/WebTechnology-Project/controllers/adminReportsCheck.php">Reports</a>
-<a href="../AdminAnnouncement/AdminAnnouncement.php">Announcement</a>
+    <a href="../AdminAnnouncement/AdminAnnouncement.php">Announcement</a>
+
 
 <?php endif; ?>
         <a href="../../Controllers/notificationsCheck.php">Notifications</a>
